@@ -1,0 +1,36 @@
+key: lumbar_mri
+display_name: "MRI Lumbar Spine without contrast (CPT 72148)"
+procedure: "MRI lumbar spine without contrast"
+cpt: "72148"
+condition: "low back pain"
+
+# Canonical criterion categories. The reasoning model tags each policy criterion
+# with one of these so evaluation and scoring are stable across payers.
+categories:
+  symptom_duration: "Duration of low back pain / symptoms"
+  conservative_therapy: "Trial and failure of conservative therapy (PT, NSAIDs, chiropractic, home exercise) with duration"
+  neuro_exam: "Physical / neurological examination documented"
+  prior_imaging: "Prior imaging status (e.g., X-ray done, or no recent duplicate MRI)"
+  red_flag: "Red-flag indication that justifies immediate imaging"
+  other: "Any other documentation requirement"
+
+# If any red-flag criterion is met, these categories are excused.
+bypass_excuses: [symptom_duration, conservative_therapy]
+
+payers:
+  aetna:
+    name: "Aetna"
+    domains: ["aetna.com"]
+    search_hint: "Aetna clinical policy bulletin 0236 MRI CT spine"
+  molina:
+    name: "Molina Healthcare"
+    domains: ["molinahealthcare.com"]
+    search_hint: "Molina clinical policy lumbar spine MRI"
+  medicare:
+    name: "Medicare (CMS)"
+    domains: ["cms.gov"]
+    search_hint: "CMS lumbar spine imaging for low back pain"
+
+# Used when the selected payer's own policy cannot be found.
+fallback_payer: medicare
+fallback_domains: ["cms.gov"]
