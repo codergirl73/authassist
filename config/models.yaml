@@ -1,0 +1,6 @@
+# Placeholder — replace with exact IDs from `python scripts/list_models.py`.
+vision:    { model: "TBD", temperature: 0.0, max_tokens: 4000 }
+fast:      { model: "TBD", temperature: 0.0, max_tokens: 2000 }
+reasoning: { model: "TBD", temperature: 0.1, max_tokens: 6000 }
+fallbacks:
+  reasoning: "TBD"

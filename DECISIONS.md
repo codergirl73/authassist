@@ -1,0 +1,17 @@
+# Decisions & deviations from spec
+
+- **Python 3.12 venv** (`uv venv --python 3.12`): the machine default is 3.15, which several wheels (pymupdf, pydantic-core) may not support yet. Spec requires 3.11+.
+- **Scanned-PDF rendering uses `pymupdf`** (no system poppler dependency, unlike `pdf2image`) — simpler Docker image.
+- **LLM retries are done in our code** (`max_retries=0` on the OpenAI client) so every attempt and every fallback shows up in the model trace.
+- **Structured output** is requested via JSON Schema in the system prompt + robust parsing (strip `<think>` blocks and code fences, outermost-brace fallback, trailing-comma repair) rather than relying on `response_format`, since support varies across Token Factory models.
+- Optional per-role `system_prefix` / `extra` in `config/models.yaml` to control Nemotron reasoning mode (the right toggle depends on the exact model).
+- **Payers:** Aetna (CPB 0236) and Molina (Lumbar Spine MRI clinical policy), with Medicare/CMS as the fallback. Chosen because their policies are publicly reachable; UnitedHealthcare and Cigna delegate imaging criteria to vendors whose guideline pages are harder to fetch.
+- **Medicare/CMS fallback source:** there is no National Coverage Determination for lumbar MRI (coverage is MAC-specific LCDs). The seed snapshot points to the CMS OP-8 "MRI Lumbar Spine for Low Back Pain" measure, which is a quality measure, not a coverage rule. A live Tavily lookup on cms.gov may find a better page.
+- **Seed snapshots are hand-written** (`origin: curated_seed`) because no Tavily/Nemotron keys were available when they were created. They summarize common lumbar-MRI imaging criteria and are NOT extracted from the policy text. The UI notice says so. `scripts/refresh_snapshots.py` replaces them with Tavily + Nemotron output.
+- **Added fields not in the spec:** `Criterion.category` (canonical category, so scoring/eval are stable across payers), `PolicyDoc.source` / `is_fallback` (to show "found via Tavily" vs "cached" vs "snapshot"), `Assessment.status`.
+- **Readiness status rule:** ready = all required criteria met; not_ready = any required missing; else needs_attention. A pure score threshold would mark "PT without duration" (score 88) as ready.
+- **Red-flag criteria are not required.** Their absence doesn't lower the score; if any is met, symptom-duration and conservative-therapy criteria are excused.
+- **Quote normalization:** lowercase, smart quotes/dashes unified, whitespace collapsed, edge punctuation/quotes trimmed. No fuzzy matching: a paraphrase fails verification.
+- **Extra API endpoint `POST /recheck`** (addendum re-run) so the API covers the same flow as the UI.
+- **Scanned cases (04, 07)** keep their source text in `reference_text.txt` for evaluation only (transcription similarity). The pipeline never reads it.
+- **Deployment target: Render** (Docker blueprint in `render.yaml`). Streamlit Community Cloud can't run the Dockerfile and has less control over secrets/env.
