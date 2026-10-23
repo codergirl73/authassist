@@ -1,0 +1,7 @@
+{
+  "case_id": "case_07",
+  "payer": "aetna",
+  "procedure": "lumbar_mri",
+  "scenario": "Saddle anesthesia + new urinary retention (cauda equina), symptoms 1 week",
+  "input": "scanned_png"
+}

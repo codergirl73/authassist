@@ -1,0 +1,23 @@
+*** SYNTHETIC - NOT A REAL PATIENT ***
+Riverside Family Medicine (fictional clinic)
+Patient: Test Patient 07    MRN: SYN-0007    DOB: 1981-08-25
+Visit date: 2026-10-21    Provider: Dr. Example Clinician, MD
+
+CHIEF COMPLAINT: Severe low back pain, numbness in groin, trouble urinating.
+
+HPI: 45-year-old female with low back pain for 1 week, sudden worsening 2 days ago.
+New urinary retention since yesterday; needed straight catheterization in urgent care
+with 650 mL residual. Reports numbness in the groin and buttocks (saddle anesthesia).
+Bilateral leg weakness. No treatment tried yet given acute onset.
+
+PRIOR IMAGING: None.
+
+EXAM: Neuro exam: decreased sensation in the perineal region (saddle anesthesia).
+Bilateral ankle dorsiflexion 4/5. Achilles reflexes absent bilaterally.
+Decreased rectal tone.
+
+ASSESSMENT: Suspected cauda equina syndrome (G83.4). Red flag - emergent imaging.
+
+PLAN: Urgent MRI lumbar spine without contrast (CPT 72148). Neurosurgery notified.
+
+*** SYNTHETIC - NOT A REAL PATIENT ***

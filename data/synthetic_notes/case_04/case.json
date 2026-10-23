@@ -1,0 +1,7 @@
+{
+  "case_id": "case_04",
+  "payer": "aetna",
+  "procedure": "lumbar_mri",
+  "scenario": "Pain 3 weeks, no conservative therapy, no red flags",
+  "input": "scanned_png"
+}

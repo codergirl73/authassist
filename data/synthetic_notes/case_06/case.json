@@ -1,0 +1,7 @@
+{
+  "case_id": "case_06",
+  "payer": "aetna",
+  "procedure": "lumbar_mri",
+  "scenario": "No neuro exam documented",
+  "input": "text"
+}

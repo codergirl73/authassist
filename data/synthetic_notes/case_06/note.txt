@@ -1,0 +1,21 @@
+*** SYNTHETIC - NOT A REAL PATIENT ***
+Riverside Family Medicine (fictional clinic)
+Patient: Test Patient 06    MRN: SYN-0006    DOB: 1968-03-17
+Visit date: 2026-10-07    Provider: Dr. Example Clinician, MD
+
+VISIT TYPE: Telephone follow-up.
+
+CHIEF COMPLAINT: Chronic low back pain, not improving.
+
+HPI: 58-year-old male with low back pain for 12 weeks. Completed physical therapy for
+6 weeks (08/04/2026 to 09/15/2026) and took diclofenac 75 mg twice daily for 6 weeks.
+Pain unchanged at 7/10 with occasional pain into the right thigh. Denies bladder or bowel
+problems, fever, weight loss, or cancer history.
+
+PRIOR IMAGING: No prior lumbar imaging.
+
+ASSESSMENT: Chronic low back pain with possible right-sided radicular symptoms (M54.41).
+
+PLAN: Order MRI lumbar spine without contrast (CPT 72148). In-person visit to be scheduled.
+
+*** SYNTHETIC - NOT A REAL PATIENT ***

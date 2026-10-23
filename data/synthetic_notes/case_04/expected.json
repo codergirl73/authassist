@@ -1,0 +1,10 @@
+{
+  "outcome": "not_ready",
+  "red_flag_bypass": false,
+  "criteria": {
+    "symptom_duration": "missing",
+    "conservative_therapy": "missing",
+    "neuro_exam": "met",
+    "red_flag": "missing"
+  }
+}

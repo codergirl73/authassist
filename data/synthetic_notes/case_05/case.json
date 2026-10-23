@@ -1,0 +1,7 @@
+{
+  "case_id": "case_05",
+  "payer": "molina",
+  "procedure": "lumbar_mri",
+  "scenario": "PT mentioned but no duration/dates",
+  "input": "text"
+}

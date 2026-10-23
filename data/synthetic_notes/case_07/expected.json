@@ -1,0 +1,8 @@
+{
+  "outcome": "ready",
+  "red_flag_bypass": true,
+  "criteria": {
+    "neuro_exam": "met",
+    "red_flag": "met"
+  }
+}

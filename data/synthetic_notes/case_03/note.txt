@@ -1,0 +1,27 @@
+*** SYNTHETIC - NOT A REAL PATIENT ***
+Riverside Family Medicine (fictional clinic)
+Patient: Test Patient 03    MRN: SYN-0003    DOB: 1957-02-03
+Visit date: 2026-10-16    Provider: Dr. Example Clinician, MD
+
+CHIEF COMPLAINT: Persistent low back pain and bilateral leg heaviness with walking.
+
+HPI: 69-year-old male with low back pain for 4 months. Completed 10 weeks of physical
+therapy (07/01/2026 to 09/09/2026) and took acetaminophen 1 g three times daily and
+meloxicam 15 mg daily for 8 weeks, with no meaningful improvement. Reports bilateral leg
+heaviness after walking two blocks, relieved by sitting (neurogenic claudication).
+Denies bowel/bladder dysfunction, saddle anesthesia, fever, or unexplained weight loss.
+
+PRIOR IMAGING: Lumbar spine X-ray 06/20/2026: multilevel degenerative disc disease,
+facet arthropathy L4-L5, no fracture. No prior MRI.
+
+EXAM: Neurological exam: strength 5/5 throughout lower extremities; patellar and Achilles
+reflexes 1+ and symmetric; sensation intact to light touch; negative straight leg raise.
+Pain reproduced with lumbar extension.
+
+ASSESSMENT: Suspected lumbar spinal stenosis (M48.062) with neurogenic claudication,
+failed conservative management.
+
+PLAN: MRI lumbar spine without contrast (CPT 72148) for evaluation of stenosis prior to
+spine surgery consultation.
+
+*** SYNTHETIC - NOT A REAL PATIENT ***

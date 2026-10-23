@@ -1,0 +1,7 @@
+{
+  "case_id": "case_02",
+  "payer": "molina",
+  "procedure": "lumbar_mri",
+  "scenario": "7 weeks conservative care, radiculopathy findings",
+  "input": "text"
+}

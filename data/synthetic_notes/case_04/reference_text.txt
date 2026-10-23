@@ -1,0 +1,23 @@
+*** SYNTHETIC - NOT A REAL PATIENT ***
+Riverside Family Medicine (fictional clinic)
+Patient: Test Patient 04    MRN: SYN-0004    DOB: 1990-06-21
+Visit date: 2026-10-20    Provider: Dr. Example Clinician, MD
+
+CHIEF COMPLAINT: Low back pain.
+
+HPI: 36-year-old male with low back pain for 3 weeks after yard work.
+Pain is aching, 6/10, worse with bending. No radiation.
+No treatment tried yet. Patient requests an MRI.
+Denies numbness, weakness, bowel or bladder changes, fever, weight loss.
+No history of cancer or trauma.
+
+PRIOR IMAGING: None.
+
+EXAM: Mild lumbar paraspinal tenderness. Neuro exam: strength 5/5,
+reflexes 2+ symmetric, sensation intact. Negative straight leg raise.
+
+ASSESSMENT: Acute low back pain, nonspecific (M54.50).
+
+PLAN: Patient requests MRI lumbar spine without contrast (CPT 72148).
+
+*** SYNTHETIC - NOT A REAL PATIENT ***

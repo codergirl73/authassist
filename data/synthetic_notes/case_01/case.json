@@ -1,0 +1,7 @@
+{
+  "case_id": "case_01",
+  "payer": "aetna",
+  "procedure": "lumbar_mri",
+  "scenario": "8 weeks PT + NSAIDs documented, neuro exam documented",
+  "input": "text"
+}

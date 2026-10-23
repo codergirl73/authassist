@@ -1,0 +1,23 @@
+*** SYNTHETIC - NOT A REAL PATIENT ***
+Riverside Family Medicine (fictional clinic)
+Patient: Test Patient 08    MRN: SYN-0008    DOB: 1960-12-02
+Visit date: 2026-10-15    Provider: Dr. Example Clinician, MD
+
+CHIEF COMPLAINT: New low back pain, worse at night.
+
+HPI: 65-year-old male with new low back pain for 2 weeks, constant, worse at night and
+not relieved by rest. History of prostate cancer treated with radiation in 2019.
+Unexplained weight loss of 12 lbs over the past 2 months. No trauma. No fever.
+No bowel or bladder changes. Has not started any treatment.
+
+PRIOR IMAGING: None.
+
+EXAM: Focal midline tenderness over L3 spinous process. Neuro exam: strength 5/5,
+reflexes 2+ symmetric, sensation intact.
+
+ASSESSMENT: Low back pain with history of malignancy and unexplained weight loss;
+suspected spinal metastasis (M54.50, Z85.46). Red flag.
+
+PLAN: MRI lumbar spine without contrast (CPT 72148). PSA ordered.
+
+*** SYNTHETIC - NOT A REAL PATIENT ***

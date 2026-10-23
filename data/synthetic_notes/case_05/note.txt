@@ -1,0 +1,22 @@
+*** SYNTHETIC - NOT A REAL PATIENT ***
+Riverside Family Medicine (fictional clinic)
+Patient: Test Patient 05    MRN: SYN-0005    DOB: 1972-11-08
+Visit date: 2026-10-13    Provider: Dr. Example Clinician, MD
+
+CHIEF COMPLAINT: Ongoing low back pain with left leg tingling.
+
+HPI: 53-year-old female with low back pain for about 3 months. She did some physical
+therapy and has been taking over-the-counter pain relievers. Still has pain 6/10 and
+intermittent tingling down the left leg. No bowel or bladder symptoms, no saddle
+numbness, no fever, no weight loss, no prior cancer.
+
+PRIOR IMAGING: None.
+
+EXAM: Neuro exam: strength 5/5 bilaterally, reflexes 2+ and symmetric, decreased light-touch
+sensation over the left lateral calf. Straight leg raise positive on the left at 60 degrees.
+
+ASSESSMENT: Low back pain with left lumbar radiculopathy (M54.16).
+
+PLAN: MRI lumbar spine without contrast (CPT 72148).
+
+*** SYNTHETIC - NOT A REAL PATIENT ***

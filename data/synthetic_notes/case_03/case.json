@@ -1,0 +1,7 @@
+{
+  "case_id": "case_03",
+  "payer": "medicare",
+  "procedure": "lumbar_mri",
+  "scenario": "Persistent pain after PT, prior X-ray, good documentation",
+  "input": "text"
+}

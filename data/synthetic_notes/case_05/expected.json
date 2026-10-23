@@ -1,0 +1,10 @@
+{
+  "outcome": "needs_attention",
+  "red_flag_bypass": false,
+  "criteria": {
+    "symptom_duration": "met",
+    "conservative_therapy": "unclear",
+    "neuro_exam": "met",
+    "red_flag": "missing"
+  }
+}

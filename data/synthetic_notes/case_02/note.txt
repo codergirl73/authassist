@@ -1,0 +1,25 @@
+*** SYNTHETIC - NOT A REAL PATIENT ***
+Riverside Family Medicine (fictional clinic)
+Patient: Test Patient 02    MRN: SYN-0002    DOB: 1985-09-30
+Visit date: 2026-10-09    Provider: Dr. Example Clinician, MD
+
+CHIEF COMPLAINT: Back pain with right leg numbness.
+
+HPI: 41-year-old female with low back pain and right leg pain for 9 weeks. She has had
+7 weeks of conservative care: physical therapy started 08/21/2026 (12 sessions to date) and
+ibuprofen 600 mg three times daily since 08/18/2026, plus a daily home exercise program.
+Symptoms persist and now include numbness on the top of the right foot.
+No urinary retention, no saddle anesthesia, no fever, no trauma, no cancer history.
+
+PRIOR IMAGING: None.
+
+EXAM: Gait antalgic. Neuro exam: right extensor hallucis longus weakness 4/5; sensation
+diminished in the right L5 dermatome; reflexes symmetric 2+. Positive straight leg raise
+on the right at 45 degrees.
+
+ASSESSMENT: Right L5 radiculopathy (M54.16) persisting despite 7 weeks of conservative
+treatment.
+
+PLAN: MRI lumbar spine without contrast (CPT 72148). Continue PT pending results.
+
+*** SYNTHETIC - NOT A REAL PATIENT ***
