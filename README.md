@@ -57,9 +57,11 @@ All LLM calls go through one module, [`authassist/llm.py`](authassist/llm.py), w
 
 | Role | Model (Token Factory ID) | Why this model |
 |---|---|---|
-| `vision` | _Nemotron Nano Omni: set from `list_models.py`_ | Multimodal: transcribes faxed/scanned notes faithfully |
-| `fast` | _Nemotron Nano: set from `list_models.py`_ | Cheap, low-latency structured extraction, query writing, short asks |
-| `reasoning` | _Nemotron Ultra (fallback: Super)_ | Policy → criteria, criteria ↔ evidence matching, letter drafting |
+| `vision` | `nvidia/Nemotron-3.5-Super-VL` | Multimodal; transcribes faxed/scanned notes at ~99% fidelity. (Nano Omni is dedicated-endpoint only on Token Factory.) |
+| `fast` | `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B` | Cheap, low-latency structured extraction, query writing, short asks (~3s per note) |
+| `reasoning` | `nvidia/Nemotron-3-Ultra-550b-a55b` (fallback `nvidia/nemotron-3-super-120b-a12b`) | Policy → criteria, criteria ↔ evidence matching, letter drafting |
+
+Nemotron's hidden reasoning is switched off for the `fast` and `vision` roles (`enable_thinking: false` in `config/models.yaml`); left on, Nano spent its whole token budget thinking and returned empty content.
 
 Reliability features: 3 retries with exponential backoff, automatic fallback model, JSON-schema prompting with robust parsing (strips `<think>` blocks and code fences, repairs trailing commas), and one self-repair retry with the validation error appended.
 
@@ -123,7 +125,18 @@ The score is computed in [`authassist/scoring.py`](authassist/scoring.py), **nev
 
 8 synthetic cases (2 of them scanned-fax images) cover: well-documented requests, missing conservative therapy, PT without duration, missing neuro exam, and two red-flag bypass scenarios. See [`eval/results.md`](eval/results.md) for per-criterion accuracy, outcome accuracy, quote-verification rate, latency per step, token totals, and failure cases.
 
-<!-- paste the Summary table from eval/results.md here after the final run -->
+**Latest run (8 synthetic cases, 2 scanned):**
+
+| Metric | Result |
+|---|---|
+| Overall outcome accuracy | 8/8 (100%) |
+| Per-criterion accuracy | 23/24 (96%) |
+| Red-flag bypass accuracy | 7/8 (88%) |
+| Evidence quotes verified verbatim | 57/57 (100%) |
+| Vision transcription similarity (scans) | ~99% |
+| Avg latency | extract 3s · match evidence 11s · whole check 10-20s |
+
+**Known failure:** case 02 triggers a red-flag bypass that the expected answer does not. Molina's own policy lists abnormal reflexes/weakness as an imaging indication, so the radiculopathy findings legitimately match it. Five expectations are marked not-applicable because a payer's policy has no such criterion. Results vary slightly between runs (reasoning model, temperature 0.1): an earlier run missed case 05 until the matcher prompt was tightened. Medicare uses a hand-written criteria snapshot because the CMS pages are quality-measure specs, not coverage rules.
 
 ## Safety, privacy & limitations
 

@@ -1,0 +1,76 @@
+{
+  "payer": "Medicare (CMS)",
+  "procedure": "MRI lumbar spine without contrast",
+  "title": "CMS OP-8: MRI Lumbar Spine for Low Back Pain (measure narrative specifications)",
+  "url": "https://www.cms.gov/files/document/lumbar-spine-imaging-low-back-pain-narrative-specifications.pdf",
+  "retrieved_at": "2026-10-23T00:00:00+00:00",
+  "text_hash": "",
+  "is_fallback": false,
+  "origin": "curated_seed",
+  "origin_note": "Hand-written seed criteria summarizing common lumbar-MRI imaging criteria; NOT extracted from the policy text. Replace with `python scripts/refresh_snapshots.py` (Tavily + Nemotron).",
+  "criteria": [
+    {
+      "id": "symptom_duration",
+      "description": "Low back pain has persisted for at least 6 weeks",
+      "policy_citation": "CMS OP-8: MRI Lumbar Spine for Low Back Pain (measure narrative specifications) - https://www.cms.gov/files/document/lumbar-spine-imaging-low-back-pain-narrative-specifications.pdf",
+      "bypass_group": null,
+      "category": "symptom_duration"
+    },
+    {
+      "id": "conservative_therapy_6wk",
+      "description": "At least 6 weeks of conservative therapy (e.g., physical therapy, NSAIDs, chiropractic, home exercise) documented with duration or dates, without adequate improvement",
+      "policy_citation": "CMS OP-8: MRI Lumbar Spine for Low Back Pain (measure narrative specifications) - https://www.cms.gov/files/document/lumbar-spine-imaging-low-back-pain-narrative-specifications.pdf",
+      "bypass_group": null,
+      "category": "conservative_therapy"
+    },
+    {
+      "id": "neuro_exam_documented",
+      "description": "Recent physical examination with neurological findings (strength, reflexes and/or sensation) documented",
+      "policy_citation": "CMS OP-8: MRI Lumbar Spine for Low Back Pain (measure narrative specifications) - https://www.cms.gov/files/document/lumbar-spine-imaging-low-back-pain-narrative-specifications.pdf",
+      "bypass_group": null,
+      "category": "neuro_exam"
+    },
+    {
+      "id": "no_recent_duplicate_imaging",
+      "description": "Prior lumbar imaging status documented (no lumbar MRI in the prior 12 months, or a clinical change since the last study)",
+      "policy_citation": "CMS OP-8: MRI Lumbar Spine for Low Back Pain (measure narrative specifications) - https://www.cms.gov/files/document/lumbar-spine-imaging-low-back-pain-narrative-specifications.pdf",
+      "bypass_group": null,
+      "category": "prior_imaging"
+    },
+    {
+      "id": "rf_cauda_equina",
+      "description": "Red flag: signs of cauda equina syndrome (saddle anesthesia, new urinary retention or incontinence, decreased rectal tone)",
+      "policy_citation": "CMS OP-8: MRI Lumbar Spine for Low Back Pain (measure narrative specifications) - https://www.cms.gov/files/document/lumbar-spine-imaging-low-back-pain-narrative-specifications.pdf",
+      "bypass_group": "red_flags",
+      "category": "red_flag"
+    },
+    {
+      "id": "rf_progressive_deficit",
+      "description": "Red flag: severe or progressive neurological deficit",
+      "policy_citation": "CMS OP-8: MRI Lumbar Spine for Low Back Pain (measure narrative specifications) - https://www.cms.gov/files/document/lumbar-spine-imaging-low-back-pain-narrative-specifications.pdf",
+      "bypass_group": "red_flags",
+      "category": "red_flag"
+    },
+    {
+      "id": "rf_malignancy",
+      "description": "Red flag: suspected malignancy (history of cancer with new back pain, or unexplained weight loss)",
+      "policy_citation": "CMS OP-8: MRI Lumbar Spine for Low Back Pain (measure narrative specifications) - https://www.cms.gov/files/document/lumbar-spine-imaging-low-back-pain-narrative-specifications.pdf",
+      "bypass_group": "red_flags",
+      "category": "red_flag"
+    },
+    {
+      "id": "rf_infection",
+      "description": "Red flag: suspected spinal infection (fever, IV drug use, immunosuppression)",
+      "policy_citation": "CMS OP-8: MRI Lumbar Spine for Low Back Pain (measure narrative specifications) - https://www.cms.gov/files/document/lumbar-spine-imaging-low-back-pain-narrative-specifications.pdf",
+      "bypass_group": "red_flags",
+      "category": "red_flag"
+    },
+    {
+      "id": "rf_fracture_trauma",
+      "description": "Red flag: significant trauma or suspected vertebral fracture",
+      "policy_citation": "CMS OP-8: MRI Lumbar Spine for Low Back Pain (measure narrative specifications) - https://www.cms.gov/files/document/lumbar-spine-imaging-low-back-pain-narrative-specifications.pdf",
+      "bypass_group": "red_flags",
+      "category": "red_flag"
+    }
+  ]
+}

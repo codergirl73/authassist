@@ -81,8 +81,12 @@ def run_case(case_dir: Path) -> dict:
 
 def summarize(rows: list[dict]) -> str:
     ok_rows = [r for r in rows if "error" not in r]
-    crit_total = sum(len(r["crit_checks"]) for r in ok_rows)
-    crit_ok = sum(exp == act for r in ok_rows for exp, act in r["crit_checks"].values())
+    # "absent" = this payer's policy has no criterion in that category (e.g. Molina has no separate
+    # neuro-exam requirement), so the expectation cannot be tested. Reported separately, not as errors.
+    scored = [(e, a) for r in ok_rows for e, a in r["crit_checks"].values() if a != "absent"]
+    crit_total = len(scored)
+    crit_ok = sum(e == a for e, a in scored)
+    n_a = sum(a == "absent" for r in ok_rows for _, a in r["crit_checks"].values())
     outcome_ok = sum(r["outcome"] == r["expected"]["outcome"] for r in ok_rows)
     bypass_ok = sum(r["bypass"] == r["expected"]["red_flag_bypass"] for r in ok_rows)
     q_total = sum(r["quotes"] for r in ok_rows)
@@ -114,6 +118,7 @@ def summarize(rows: list[dict]) -> str:
         "|---|---|",
         f"| Overall outcome accuracy (ready / needs attention / not ready) | {pct(outcome_ok, len(ok_rows))} |",
         f"| Per-criterion accuracy (key criteria in expected.json) | {pct(crit_ok, crit_total)} |",
+        f"| Expectations not applicable (payer policy has no such criterion) | {n_a} |",
         f"| Red-flag bypass accuracy | {pct(bypass_ok, len(ok_rows))} |",
         f"| Evidence quotes verified verbatim in note | {pct(q_ok, q_total)} |",
         f"| Cases that errored | {len(rows) - len(ok_rows)} |",
@@ -130,12 +135,13 @@ def summarize(rows: list[dict]) -> str:
                 f"| {r['case']} | {r['meta']['scenario']} | {r['meta']['input']} | {r['expected']['outcome']} | ERROR | - | - | - | - |"
             )
             continue
-        c_ok = sum(e == a for e, a in r["crit_checks"].values())
+        c_ok = sum(e == a for e, a in r["crit_checks"].values() if a != "absent")
+        c_tot = sum(a != "absent" for _, a in r["crit_checks"].values())
         mark = "OK" if r["outcome"] == r["expected"]["outcome"] else "MISS"
         lines.append(
             f"| {r['case']} | {r['meta']['scenario']} | {r['meta']['input']} | {r['expected']['outcome']} | "
             f"{r['outcome']} ({mark}) | {r['score']} | {'yes' if r['bypass'] else 'no'} | "
-            f"{c_ok}/{len(r['crit_checks'])} | {r['seconds']:.1f}s |"
+            f"{c_ok}/{c_tot} | {r['seconds']:.1f}s |"
         )
     sims = [(r["case"], r["transcription_similarity"]) for r in ok_rows if "transcription_similarity" in r]
     if sims:
@@ -159,6 +165,7 @@ def summarize(rows: list[dict]) -> str:
         lines.append(f"| {step} | `{model}` | {len(lats)} | {sum(lats) / len(lats) / 1000:.1f}s |")
 
     failures = []
+    notes: list[str] = []
     for r in rows:
         if "error" in r:
             failures.append(f"- **{r['case']}** errored: `{r['error']}`")
@@ -168,13 +175,19 @@ def summarize(rows: list[dict]) -> str:
                 f"- **{r['case']}** outcome: expected `{r['expected']['outcome']}`, got `{r['outcome']}` (score {r['score']})."
             )
         for cat, (exp, act) in r["crit_checks"].items():
-            if exp != act:
+            if act == "absent":
+                notes.append(
+                    f"- {r['case']} `{cat}`: not applicable - the payer's policy has no such criterion."
+                )
+            elif exp != act:
                 failures.append(f"- **{r['case']}** `{cat}`: expected `{exp}`, got `{act}`.")
         if r["quotes"] != r["quotes_verified"]:
             failures.append(
                 f"- **{r['case']}**: {r['quotes'] - r['quotes_verified']} evidence quote(s) failed verbatim verification (downgraded automatically)."
             )
     lines += ["", "## Failure cases", ""] + (failures or ["- None in this run."])
+    if notes:
+        lines += ["", "## Not applicable (not counted as errors)", ""] + notes
     lines += [
         "",
         "_Policy criteria source per case: "

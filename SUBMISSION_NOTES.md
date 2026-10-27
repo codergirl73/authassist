@@ -6,7 +6,7 @@ Prior authorization costs US clinics hours per week, and many denials happen eve
 
 ## Built with
 
-Nebius Token Factory · NVIDIA Nemotron (vision / fast / reasoning, exact IDs in `config/models.yaml`) · Tavily (search + extract) · Python · FastAPI · Streamlit · Pydantic · ReportLab · PyMuPDF · pypdf · Docker · Render
+Nebius Token Factory · NVIDIA Nemotron 3.5 Super VL · Nemotron 3 Nano 30B-A3B · Nemotron 3 Ultra 550B-A55B · Tavily (search + extract) · Python · FastAPI · Streamlit · Pydantic · ReportLab · PyMuPDF · pypdf · Docker · Render
 
 ## 3-minute demo video script
 
@@ -26,7 +26,7 @@ Nebius Token Factory · NVIDIA Nemotron (vision / fast / reasoning, exact IDs in
 - Would we use again:
 
 ### NVIDIA Nemotron models
-- Models used: _(fill after model discovery)_
+- Models used: Nemotron-3.5-Super-VL (vision), NVIDIA-Nemotron-3-Nano-30B-A3B (fast), Nemotron-3-Ultra-550b-a55b (reasoning), nemotron-3-super-120b-a12b (fallback).
 - What worked:
 - What didn't:
 
@@ -38,4 +38,11 @@ Nebius Token Factory · NVIDIA Nemotron (vision / fast / reasoning, exact IDs in
 - Would we use again:
 
 ### Running observations
+- Model discovery: `GET /v1/models` returned exactly 5 Nemotron models. API IDs differ from catalog display names (e.g. `nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B`); the catalog page URL shows the real ID. Nano Omni and Nano V2 12B are dedicated-endpoint only, so vision uses Nemotron 3.5 Super VL.
+- Nemotron 3 Nano with reasoning on burned all 3000 max_tokens thinking and returned empty `content` (finish_reason=length). `extra_body={"chat_template_kwargs":{"enable_thinking":False}}` fixed it (664 tokens, clean JSON); `reasoning_effort=low` did not. Big win for latency: extraction went to ~3s.
+- Vision: OpenAI-style base64 `image_url` works unchanged on Nemotron-3.5-Super-VL; ~99% transcription similarity on noisy, rotated fax-style images.
+- Ultra (reasoning) is ~11s per evidence-matching call; JSON output reliable, 1 repair retry needed once during policy -> criteria.
+- Tavily: `include_domains` allow-listing returned the payer's own policy first try for Aetna and Molina. For CMS it returned quality-measure specs and a public-comment report, not coverage guidance; extraction from those was noisy (e.g. 20 exclusion-list criteria). `extract` is fast (<1s) and cheap; caching makes repeat runs free.
+- Policy extraction needed prompt guidance to treat alternative pathways (trauma, hospitalization) as red flags, not required criteria; otherwise every ordinary case scored low.
+- Model output varies slightly run to run at temperature 0.1 (one case flipped between runs), so we report it in the eval.
 - 2026-10-23: Built the full pipeline offline against faked LLM/Tavily transports while waiting on API keys. Keeping every LLM call in a single module (`llm.py`) made this easy. Live validation is pending.

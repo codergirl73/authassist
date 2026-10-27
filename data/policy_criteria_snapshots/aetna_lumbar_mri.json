@@ -1,76 +1,68 @@
 {
   "payer": "Aetna",
   "procedure": "MRI lumbar spine without contrast",
-  "title": "Aetna Clinical Policy Bulletin 0236: Magnetic Resonance Imaging (MRI) and Computed Tomography (CT) of the Spine",
+  "title": "Magnetic Resonance Imaging (MRI) and Computed Tomography (CT) of the Spine - Medical Clinical Policy Bulletins | Aetna",
   "url": "https://www.aetna.com/cpb/medical/data/200_299/0236.html",
-  "retrieved_at": "2026-10-23T00:00:00+00:00",
-  "text_hash": "",
+  "retrieved_at": "2026-10-27T16:57:02.006014+00:00",
+  "text_hash": "6746bdc03a502fa6",
   "is_fallback": false,
-  "origin": "curated_seed",
-  "origin_note": "Hand-written seed criteria summarizing common lumbar-MRI imaging criteria; NOT extracted from the policy text. Replace with `python scripts/refresh_snapshots.py` (Tavily + Nemotron).",
+  "origin": "tavily+nemotron",
   "criteria": [
     {
-      "id": "symptom_duration",
-      "description": "Low back pain has persisted for at least 6 weeks",
-      "policy_citation": "Aetna Clinical Policy Bulletin 0236: Magnetic Resonance Imaging (MRI) and Computed Tomography (CT) of the Spine - https://www.aetna.com/cpb/medical/data/200_299/0236.html",
+      "id": "red_flag_cauda_equina",
+      "description": "Cauda equina syndrome documented (e.g., saddle anesthesia, bowel/bladder dysfunction, progressive lower extremity weakness)",
+      "policy_citation": "Medical Necessity - https://www.aetna.com/cpb/medical/data/200_299/0236.html",
+      "bypass_group": "red_flags",
+      "category": "red_flag"
+    },
+    {
+      "id": "red_flag_malignancy",
+      "description": "Suspected spinal malignancy documented (e.g., known cancer with new spinal symptoms, imaging findings suggestive of metastasis, or ICD-10 codes C41.2, C70.1, C72.0-C72.1, C79.51-C79.52)",
+      "policy_citation": "Medical Necessity - https://www.aetna.com/cpb/medical/data/200_299/0236.html",
+      "bypass_group": "red_flags",
+      "category": "red_flag"
+    },
+    {
+      "id": "red_flag_infection",
+      "description": "Suspected spinal infection documented (e.g., osteomyelitis, discitis, epidural abscess, tuberculosis of spine; ICD-10 codes A18.01, A18.03, G06.1, M46.20-M46.39, M86.08, M86.18, M86.28, M86.38, M86.48, M86.58, M86.68, M86.8x8, M86.9, M89.68, M90.88)",
+      "policy_citation": "Medical Necessity - https://www.aetna.com/cpb/medical/data/200_299/0236.html",
+      "bypass_group": "red_flags",
+      "category": "red_flag"
+    },
+    {
+      "id": "red_flag_fracture_trauma",
+      "description": "Acute lumbar spine fracture, dislocation, or significant trauma documented (ICD-10 codes S32.000A-S32.2xxS, S33.100A-S33.39xS)",
+      "policy_citation": "Medical Necessity - https://www.aetna.com/cpb/medical/data/200_299/0236.html",
+      "bypass_group": "red_flags",
+      "category": "red_flag"
+    },
+    {
+      "id": "red_flag_progressive_neuro_deficit",
+      "description": "Progressive neurological deficit documented (e.g., worsening radiculopathy, myelopathy, or new/worsening motor/sensory loss; ICD-10 codes M50.00-M50.03, M51.04-M51.06, M50.10-M50.13, M50.20-M50.23, M51.24-M51.27)",
+      "policy_citation": "Medical Necessity - https://www.aetna.com/cpb/medical/data/200_299/0236.html",
+      "bypass_group": "red_flags",
+      "category": "red_flag"
+    },
+    {
+      "id": "symptom_duration_6_weeks",
+      "description": "Low back pain duration of 6 weeks or more documented",
+      "policy_citation": "Background - https://www.aetna.com/cpb/medical/data/200_299/0236.html",
       "bypass_group": null,
       "category": "symptom_duration"
     },
     {
-      "id": "conservative_therapy_6wk",
-      "description": "At least 6 weeks of conservative therapy (e.g., physical therapy, NSAIDs, chiropractic, home exercise) documented with duration or dates, without adequate improvement",
-      "policy_citation": "Aetna Clinical Policy Bulletin 0236: Magnetic Resonance Imaging (MRI) and Computed Tomography (CT) of the Spine - https://www.aetna.com/cpb/medical/data/200_299/0236.html",
+      "id": "conservative_therapy_failed",
+      "description": "Conservative therapy (moderate activity, analgesics, NSAIDs, muscle relaxants) completed for adequate duration without improvement; symptoms persist, worsen, or do not improve despite conservative care",
+      "policy_citation": "Background - https://www.aetna.com/cpb/medical/data/200_299/0236.html",
       "bypass_group": null,
       "category": "conservative_therapy"
     },
     {
       "id": "neuro_exam_documented",
-      "description": "Recent physical examination with neurological findings (strength, reflexes and/or sensation) documented",
-      "policy_citation": "Aetna Clinical Policy Bulletin 0236: Magnetic Resonance Imaging (MRI) and Computed Tomography (CT) of the Spine - https://www.aetna.com/cpb/medical/data/200_299/0236.html",
+      "description": "Neurological examination performed and documented (assessment of motor, sensory, reflexes, straight leg raise) to evaluate for radiculopathy or neurologic deficit",
+      "policy_citation": "Background - https://www.aetna.com/cpb/medical/data/200_299/0236.html",
       "bypass_group": null,
       "category": "neuro_exam"
-    },
-    {
-      "id": "no_recent_duplicate_imaging",
-      "description": "Prior lumbar imaging status documented (no lumbar MRI in the prior 12 months, or a clinical change since the last study)",
-      "policy_citation": "Aetna Clinical Policy Bulletin 0236: Magnetic Resonance Imaging (MRI) and Computed Tomography (CT) of the Spine - https://www.aetna.com/cpb/medical/data/200_299/0236.html",
-      "bypass_group": null,
-      "category": "prior_imaging"
-    },
-    {
-      "id": "rf_cauda_equina",
-      "description": "Red flag: signs of cauda equina syndrome (saddle anesthesia, new urinary retention or incontinence, decreased rectal tone)",
-      "policy_citation": "Aetna Clinical Policy Bulletin 0236: Magnetic Resonance Imaging (MRI) and Computed Tomography (CT) of the Spine - https://www.aetna.com/cpb/medical/data/200_299/0236.html",
-      "bypass_group": "red_flags",
-      "category": "red_flag"
-    },
-    {
-      "id": "rf_progressive_deficit",
-      "description": "Red flag: severe or progressive neurological deficit",
-      "policy_citation": "Aetna Clinical Policy Bulletin 0236: Magnetic Resonance Imaging (MRI) and Computed Tomography (CT) of the Spine - https://www.aetna.com/cpb/medical/data/200_299/0236.html",
-      "bypass_group": "red_flags",
-      "category": "red_flag"
-    },
-    {
-      "id": "rf_malignancy",
-      "description": "Red flag: suspected malignancy (history of cancer with new back pain, or unexplained weight loss)",
-      "policy_citation": "Aetna Clinical Policy Bulletin 0236: Magnetic Resonance Imaging (MRI) and Computed Tomography (CT) of the Spine - https://www.aetna.com/cpb/medical/data/200_299/0236.html",
-      "bypass_group": "red_flags",
-      "category": "red_flag"
-    },
-    {
-      "id": "rf_infection",
-      "description": "Red flag: suspected spinal infection (fever, IV drug use, immunosuppression)",
-      "policy_citation": "Aetna Clinical Policy Bulletin 0236: Magnetic Resonance Imaging (MRI) and Computed Tomography (CT) of the Spine - https://www.aetna.com/cpb/medical/data/200_299/0236.html",
-      "bypass_group": "red_flags",
-      "category": "red_flag"
-    },
-    {
-      "id": "rf_fracture_trauma",
-      "description": "Red flag: significant trauma or suspected vertebral fracture",
-      "policy_citation": "Aetna Clinical Policy Bulletin 0236: Magnetic Resonance Imaging (MRI) and Computed Tomography (CT) of the Spine - https://www.aetna.com/cpb/medical/data/200_299/0236.html",
-      "bypass_group": "red_flags",
-      "category": "red_flag"
     }
   ]
 }

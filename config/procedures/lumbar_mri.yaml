@@ -30,6 +30,10 @@ payers:
     name: "Medicare (CMS)"
     domains: ["cms.gov"]
     search_hint: "CMS lumbar spine imaging for low back pain"
+    exclude_url_terms: ["public-comment", "comment-summary"]
+    # CMS has no national lumbar-MRI coverage rule; the live CMS pages are quality-measure specs whose
+    # extraction is noisy, so use the labelled curated snapshot unless --refresh is forced.
+    prefer_snapshot: true
 
 # Used when the selected payer's own policy cannot be found.
 fallback_payer: medicare

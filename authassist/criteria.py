@@ -21,7 +21,17 @@ Rules:
 - category must be one of: {categories}.
 - policy_citation: the section heading (or nearest heading) from the policy, followed by " - " and the URL.
 - ids: short snake_case, unique.
-- Base every criterion on the policy text; do not add requirements the policy does not state."""
+- Base every criterion on the policy text; do not add requirements the policy does not state.
+- Policies list ALTERNATIVE pathways. Required (bypass_group = null) criteria must describe the standard
+  pathway for a patient with persistent, non-traumatic low back pain and no red flags (symptom duration,
+  conservative therapy, neurological/physical exam, prior-imaging status, if the policy states them).
+  Do NOT make condition-specific pathways required (trauma, hospitalization, known cancer follow-up,
+  post-surgical, pregnancy). If such a pathway justifies imaging without conservative therapy, make it a
+  red_flag criterion; otherwise omit it.
+- Keep one criterion per distinct requirement; do not duplicate a requirement across categories.
+- "Symptoms persisting, worsening or not improving despite conservative care" is part of the
+  conservative-therapy requirement, NOT a separate criterion: fold it into the conservative_therapy
+  criterion's wording. Use category "symptom_duration" only for how long the pain has lasted."""
 
 
 def _clean_id(value: str, used: set[str]) -> str:

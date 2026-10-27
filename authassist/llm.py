@@ -112,7 +112,7 @@ def _call_once(model: str, settings: dict, messages: list[dict]) -> tuple[str, o
         messages=messages,
         temperature=settings.get("temperature", 0.0),
         max_tokens=settings.get("max_tokens", 2000),
-        **settings.get("extra", {}),
+        **({"extra_body": settings["extra_body"]} if settings.get("extra_body") else {}),
     )
     content = resp.choices[0].message.content or ""
     return content, resp.usage

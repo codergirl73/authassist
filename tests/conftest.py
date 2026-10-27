@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import json
+from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
@@ -48,6 +49,7 @@ def isolated(monkeypatch, tmp_path):
     monkeypatch.setattr(config, "models_config", lambda: TEST_MODELS)
     monkeypatch.setattr(config, "CACHE_DIR", tmp_path / "cache")
     monkeypatch.setattr(llm, "_backoff", lambda attempt: None)
+    monkeypatch.setattr(policy, "SNAPSHOT_DIR", Path(__file__).parent / "fixtures" / "snapshots")
     monkeypatch.setattr(llm, "client", lambda: object())  # transport is faked via _call_once
 
     def no_tavily():

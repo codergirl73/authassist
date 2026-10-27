@@ -35,6 +35,9 @@ Rules:
 - Never invent or paraphrase evidence. Copy the quote character-for-character from the NOTE.
   Keep quotes short (one sentence or clause). If the note does not say it, status = missing.
 - "unclear" only when the note mentions it but lacks a required detail (e.g., duration).
+- If a criterion requires a quantity (e.g. ">= 6 weeks of therapy"), it is "met" ONLY when the note
+  explicitly states that quantity or dates that prove it. A vague mention ("did some physical therapy",
+  "tried over-the-counter pain relievers") with no duration or dates is "unclear", never "met".
 - For red-flag criteria: "met" only if the note documents that red flag; otherwise "missing".
 - Return one result per criterion, using the exact criterion_id given.
 - Set quote_verified to false (it is checked by code).

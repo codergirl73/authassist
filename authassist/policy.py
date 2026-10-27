@@ -202,7 +202,15 @@ def fetch_live(payer_key: str, proc: dict) -> PolicyBundle | None:
         queries = write_queries(name, proc)
         if payer_cfg.get("search_hint") and not is_fallback:
             queries.insert(0, payer_cfg["search_hint"])
-        for cand in search_candidates(queries[:3], domains)[:3]:
+        exclude = (payer_cfg if not is_fallback else proc["payers"][proc["fallback_payer"]]).get(
+            "exclude_url_terms", []
+        )
+        cands = [
+            c
+            for c in search_candidates(queries[:3], domains)
+            if not any(t in c["url"].lower() for t in exclude)
+        ]
+        for cand in cands[:3]:
             text = extract_text(cand["url"])
             if len(text) < MIN_POLICY_CHARS:
                 continue
@@ -226,6 +234,11 @@ def find_policy(
     proc = config.procedure_config(procedure_key)
     if payer_key not in proc["payers"]:
         raise ValueError(f"Unknown payer {payer_key!r}")
+
+    if not force_refresh and proc["payers"][payer_key].get("prefer_snapshot"):
+        snap = load_snapshot(payer_key, procedure_key)
+        if snap:
+            return snap
 
     if not force_refresh:
         cached = load_cache(payer_key, procedure_key)

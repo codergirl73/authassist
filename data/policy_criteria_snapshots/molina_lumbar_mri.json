@@ -1,74 +1,101 @@
 {
   "payer": "Molina Healthcare",
   "procedure": "MRI lumbar spine without contrast",
-  "title": "Molina Clinical Policy: Lumbar Spine MRI",
-  "url": "https://www.molinahealthcare.com/~/media/Molina/PublicWebsite/PDF/Common/Molina%20Clinical%20Policy/Lumbar%20Spine%20MRI.pdf",
-  "retrieved_at": "2026-10-23T00:00:00+00:00",
-  "text_hash": "",
+  "title": "[PDF] Molina Clinical Review Lumbar Spine MRI: Policy No. MCR-621",
+  "url": "https://www.molinahealthcare.com/-/media/Molina/PublicWebsite/PDF/Providers/wa/Medicaid/resource/mcp-mcr/MCR-621-Lumbar-Spine-MRI.pdf",
+  "retrieved_at": "2026-10-27T16:57:21.686505+00:00",
+  "text_hash": "87f820cbe533aa8b",
   "is_fallback": false,
-  "origin": "curated_seed",
-  "origin_note": "Hand-written seed criteria summarizing common lumbar-MRI imaging criteria; NOT extracted from the policy text. Replace with `python scripts/refresh_snapshots.py` (Tavily + Nemotron).",
+  "origin": "tavily+nemotron",
   "criteria": [
     {
-      "id": "symptom_duration",
-      "description": "Low back pain has persisted for at least 6 weeks",
-      "policy_citation": "Molina Clinical Policy: Lumbar Spine MRI - https://www.molinahealthcare.com/~/media/Molina/PublicWebsite/PDF/Common/Molina%20Clinical%20Policy/Lumbar%20Spine%20MRI.pdf",
-      "bypass_group": null,
-      "category": "symptom_duration"
-    },
-    {
-      "id": "conservative_therapy_6wk",
-      "description": "At least 6 weeks of conservative therapy (e.g., physical therapy, NSAIDs, chiropractic, home exercise) documented with duration or dates, without adequate improvement",
-      "policy_citation": "Molina Clinical Policy: Lumbar Spine MRI - https://www.molinahealthcare.com/~/media/Molina/PublicWebsite/PDF/Common/Molina%20Clinical%20Policy/Lumbar%20Spine%20MRI.pdf",
+      "id": "conservative_therapy",
+      "description": "Documented trial of conservative therapy for at least 6 weeks ending within the last 6 months, consisting of inactive treatments (anti-inflammatory medications, activity modification, bracing, icing) plus at least one active treatment (physical therapy, chiropractic therapy, or provider-supervised home exercise program), with symptoms persisting, worsening, or not improving despite such care.",
+      "policy_citation": "1. Chronic Pain - https://www.molinahealthcare.com/-/media/Molina/PublicWebsite/PDF/Providers/wa/Medicaid/resource/mcp-mcr/MCR-621-Lumbar-Spine-MRI.pdf",
       "bypass_group": null,
       "category": "conservative_therapy"
     },
     {
-      "id": "neuro_exam_documented",
-      "description": "Recent physical examination with neurological findings (strength, reflexes and/or sensation) documented",
-      "policy_citation": "Molina Clinical Policy: Lumbar Spine MRI - https://www.molinahealthcare.com/~/media/Molina/PublicWebsite/PDF/Common/Molina%20Clinical%20Policy/Lumbar%20Spine%20MRI.pdf",
-      "bypass_group": null,
-      "category": "neuro_exam"
-    },
-    {
-      "id": "no_recent_duplicate_imaging",
-      "description": "Prior lumbar imaging status documented (no lumbar MRI in the prior 12 months, or a clinical change since the last study)",
-      "policy_citation": "Molina Clinical Policy: Lumbar Spine MRI - https://www.molinahealthcare.com/~/media/Molina/PublicWebsite/PDF/Common/Molina%20Clinical%20Policy/Lumbar%20Spine%20MRI.pdf",
+      "id": "prior_imaging",
+      "description": "No same or similar imaging study recently completed without a specific documented reason for repeat imaging that will affect care.",
+      "policy_citation": "Additional Critical Information - https://www.molinahealthcare.com/-/media/Molina/PublicWebsite/PDF/Providers/wa/Medicaid/resource/mcp-mcr/MCR-621-Lumbar-Spine-MRI.pdf",
       "bypass_group": null,
       "category": "prior_imaging"
     },
     {
-      "id": "rf_cauda_equina",
-      "description": "Red flag: signs of cauda equina syndrome (saddle anesthesia, new urinary retention or incontinence, decreased rectal tone)",
-      "policy_citation": "Molina Clinical Policy: Lumbar Spine MRI - https://www.molinahealthcare.com/~/media/Molina/PublicWebsite/PDF/Common/Molina%20Clinical%20Policy/Lumbar%20Spine%20MRI.pdf",
+      "id": "cauda_equina",
+      "description": "Bowel or bladder dysfunction (decreased anal sphincter tone, urinary issues not due to stress incontinence) or saddle anesthesia documented on exam.",
+      "policy_citation": "2. Abnormal Neurologic Findings (b, c) - https://www.molinahealthcare.com/-/media/Molina/PublicWebsite/PDF/Providers/wa/Medicaid/resource/mcp-mcr/MCR-621-Lumbar-Spine-MRI.pdf",
       "bypass_group": "red_flags",
       "category": "red_flag"
     },
     {
-      "id": "rf_progressive_deficit",
-      "description": "Red flag: severe or progressive neurological deficit",
-      "policy_citation": "Molina Clinical Policy: Lumbar Spine MRI - https://www.molinahealthcare.com/~/media/Molina/PublicWebsite/PDF/Common/Molina%20Clinical%20Policy/Lumbar%20Spine%20MRI.pdf",
+      "id": "progressive_neuro_deficit",
+      "description": "Progressive neurological deficit documented: weakness, abnormal reflexes, dermatomal sensory change, abnormal EMG/nerve conduction study indicating lumbar spine abnormality, or atrophy of related muscles.",
+      "policy_citation": "2. Abnormal Neurologic Findings (a, d, e) - https://www.molinahealthcare.com/-/media/Molina/PublicWebsite/PDF/Providers/wa/Medicaid/resource/mcp-mcr/MCR-621-Lumbar-Spine-MRI.pdf",
       "bypass_group": "red_flags",
       "category": "red_flag"
     },
     {
-      "id": "rf_malignancy",
-      "description": "Red flag: suspected malignancy (history of cancer with new back pain, or unexplained weight loss)",
-      "policy_citation": "Molina Clinical Policy: Lumbar Spine MRI - https://www.molinahealthcare.com/~/media/Molina/PublicWebsite/PDF/Common/Molina%20Clinical%20Policy/Lumbar%20Spine%20MRI.pdf",
+      "id": "neurogenic_claudication",
+      "description": "Neurogenic claudication (pseudoclaudication) with x-ray showing significant lumbar spinal stenosis and intervention considered.",
+      "policy_citation": "2. Abnormal Neurologic Findings (f) - https://www.molinahealthcare.com/-/media/Molina/PublicWebsite/PDF/Providers/wa/Medicaid/resource/mcp-mcr/MCR-621-Lumbar-Spine-MRI.pdf",
       "bypass_group": "red_flags",
       "category": "red_flag"
     },
     {
-      "id": "rf_infection",
-      "description": "Red flag: suspected spinal infection (fever, IV drug use, immunosuppression)",
-      "policy_citation": "Molina Clinical Policy: Lumbar Spine MRI - https://www.molinahealthcare.com/~/media/Molina/PublicWebsite/PDF/Common/Molina%20Clinical%20Policy/Lumbar%20Spine%20MRI.pdf",
+      "id": "scoliosis_surgical_candidate",
+      "description": "Scoliosis evaluation ordered by orthopedist or neurosurgeon with patient age and severity on x-ray indicating bracing or surgery may be provided.",
+      "policy_citation": "2. Abnormal Neurologic Findings (g) - https://www.molinahealthcare.com/-/media/Molina/PublicWebsite/PDF/Providers/wa/Medicaid/resource/mcp-mcr/MCR-621-Lumbar-Spine-MRI.pdf",
       "bypass_group": "red_flags",
       "category": "red_flag"
     },
     {
-      "id": "rf_fracture_trauma",
-      "description": "Red flag: significant trauma or suspected vertebral fracture",
-      "policy_citation": "Molina Clinical Policy: Lumbar Spine MRI - https://www.molinahealthcare.com/~/media/Molina/PublicWebsite/PDF/Common/Molina%20Clinical%20Policy/Lumbar%20Spine%20MRI.pdf",
+      "id": "known_suspected_tumor_mass",
+      "description": "Known or suspected tumor or mass: initial evaluation of recently diagnosed cancer, follow-up of known tumor/mass after treatment or with new signs/symptoms, surveillance per clinical standards, severe bone pain with history of cancer, or positive bone scan/x-ray suggestive of bone cancer.",
+      "policy_citation": "3. Known or Suspected Tumor or Mass - https://www.molinahealthcare.com/-/media/Molina/PublicWebsite/PDF/Providers/wa/Medicaid/resource/mcp-mcr/MCR-621-Lumbar-Spine-MRI.pdf",
+      "bypass_group": "red_flags",
+      "category": "red_flag"
+    },
+    {
+      "id": "spinal_fracture_trauma",
+      "description": "Evaluation of spinal fractures or blunt trauma to the spine with abnormal neurologic findings.",
+      "policy_citation": "4. Trauma (c) - https://www.molinahealthcare.com/-/media/Molina/PublicWebsite/PDF/Providers/wa/Medicaid/resource/mcp-mcr/MCR-621-Lumbar-Spine-MRI.pdf",
+      "bypass_group": "red_flags",
+      "category": "red_flag"
+    },
+    {
+      "id": "immune_suppression_spine",
+      "description": "Evaluation of spine abnormalities related to immune system suppression (e.g., HIV, chemotherapy, leukemia, lymphoma).",
+      "policy_citation": "5. Spine Issues Related to Immune System Suppression - https://www.molinahealthcare.com/-/media/Molina/PublicWebsite/PDF/Providers/wa/Medicaid/resource/mcp-mcr/MCR-621-Lumbar-Spine-MRI.pdf",
+      "bypass_group": "red_flags",
+      "category": "red_flag"
+    },
+    {
+      "id": "suspected_infection_inflammatory",
+      "description": "Suspected infection, abscess, or inflammatory disease with abnormal signs, symptoms, lab tests, or other imaging findings.",
+      "policy_citation": "6. Spine Issues Related to Infection or Other Inflammatory Process - https://www.molinahealthcare.com/-/media/Molina/PublicWebsite/PDF/Providers/wa/Medicaid/resource/mcp-mcr/MCR-621-Lumbar-Spine-MRI.pdf",
+      "bypass_group": "red_flags",
+      "category": "red_flag"
+    },
+    {
+      "id": "congenital_dysraphism",
+      "description": "Congenital conditions: sacral dimples suspicious for dysraphism (skin lesions such as hairy patches, sacral lipomas, hemangioma, dimple >0.5 cm, or distance >2.5 cm from anal verge), known spinal dysraphism/spina bifida needing follow-up, or possible tethered cord.",
+      "policy_citation": "7. Congenital Conditions - https://www.molinahealthcare.com/-/media/Molina/PublicWebsite/PDF/Providers/wa/Medicaid/resource/mcp-mcr/MCR-621-Lumbar-Spine-MRI.pdf",
+      "bypass_group": "red_flags",
+      "category": "red_flag"
+    },
+    {
+      "id": "ankylosing_spondylitis",
+      "description": "Suspected ankylosing spondylitis with sacral iliac pain, elevated ESR or C-reactive protein, positive HLA-B27, or indeterminate x-ray result.",
+      "policy_citation": "8. Other (a) - https://www.molinahealthcare.com/-/media/Molina/PublicWebsite/PDF/Providers/wa/Medicaid/resource/mcp-mcr/MCR-621-Lumbar-Spine-MRI.pdf",
+      "bypass_group": "red_flags",
+      "category": "red_flag"
+    },
+    {
+      "id": "spinal_vascular_lesion",
+      "description": "Known or suspected spinal vascular lesion or malformation.",
+      "policy_citation": "8. Other (b) - https://www.molinahealthcare.com/-/media/Molina/PublicWebsite/PDF/Providers/wa/Medicaid/resource/mcp-mcr/MCR-621-Lumbar-Spine-MRI.pdf",
       "bypass_group": "red_flags",
       "category": "red_flag"
     }
