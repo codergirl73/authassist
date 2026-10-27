@@ -51,6 +51,10 @@ flowchart LR
     L --> D[Request PDF<br/>reportlab]
 ```
 
+![Architecture](assets/architecture.png)
+
+![Swimlane](assets/swimlane.png)
+
 Every model and tool call is recorded in a **trace** (step, role, model ID, latency, tokens, success) and shown in the UI's "How it works · Model trace" tab.
 
 ## How we use NVIDIA Nemotron + Nebius Token Factory

@@ -8,6 +8,8 @@ Before many procedures, US clinics need the insurer's approval first. Staff lose
 
 AuthAssist checks a clinical note against the insurer's *current* published policy and shows exactly what's missing.
 
+![AuthAssist readiness result: score ring, key metrics and what's missing](https://raw.githubusercontent.com/codergirl73/authassist/main/assets/ui-results.jpg)
+
 1. **Reads the note**: typed, PDF, or a faxed scan (a Nemotron vision model transcribes it).
 2. **Extracts structured facts**: symptoms, duration, treatments, red flags, exam findings.
 3. **Finds the insurer's policy** with Tavily search + extract, and turns it into a checklist.
@@ -18,7 +20,13 @@ AuthAssist checks a clinical note against the insurer's *current* published poli
 
 Scope: MRI lumbar spine without contrast (CPT 72148) for low back pain, with Aetna, Molina and a Medicare fallback. More procedures are a config file away.
 
+**Every piece of evidence is highlighted in the note and checked word-for-word.** Green is met, red is missing, and anything the model quotes that isn't really in the note is downgraded automatically.
+
+![Annotated note: verified quotes highlighted in place on a scanned fax](https://raw.githubusercontent.com/codergirl73/authassist/main/assets/ui-annotated-note.jpg)
+
 ## How we built it
+
+![Architecture: pipeline, Nebius Token Factory models, Tavily and local storage](https://raw.githubusercontent.com/codergirl73/authassist/main/assets/architecture.png)
 
 - **All AI runs on Nebius Token Factory with NVIDIA Nemotron**, routed by role:
   - **Nemotron 3 Ultra** for the heavy reasoning (policy → criteria, evidence matching, the letter).
@@ -27,6 +35,14 @@ Scope: MRI lumbar spine without contrast (CPT 72148) for low back pain, with Aet
 - **Tavily** supplies the live policy: domain-restricted search so results come from the insurer's own site, then extract for the full text. Policies and criteria are cached, with a committed criteria snapshot as a safety net.
 - **Trust by design:** the model *proposes* evidence, code *verifies* it, and code *scores* it. A per-step model trace in the UI shows which Nemotron model did what.
 - Python, FastAPI, Streamlit, Pydantic, ReportLab, Docker.
+
+Who does what, step by step (the dashed line is the gap-fill loop):
+
+![Swimlane: clinic staff, AuthAssist code, Nemotron on Token Factory, Tavily and the clinician](https://raw.githubusercontent.com/codergirl73/authassist/main/assets/swimlane.png)
+
+The UI shows which Nemotron model did each step, with latency and tokens:
+
+![Model trace tab listing every call, model, latency and tokens](https://raw.githubusercontent.com/codergirl73/authassist/main/assets/ui-model-trace.jpg)
 
 ## Challenges we ran into
 
