@@ -156,3 +156,22 @@ def test_addendum_recheck_and_pdf(fake_llm):
         "verified in note",
     ]:
         assert needle in text
+
+
+def test_pdf_text_is_sanitised_for_helvetica():
+    from authassist.pdf import pdf_safe
+
+    raw = "36‑year‑old, ≥ 6 weeks 【Background - https://x.y】 → ok"
+    out = pdf_safe(raw)
+    assert out == "36-year-old, >= 6 weeks [Background - https://x.y] -> ok"
+    assert out.encode("cp1252")  # everything left is drawable
+
+
+def test_pdf_markdown_keeps_line_breaks():
+    from reportlab.lib.styles import getSampleStyleSheet
+
+    from authassist.pdf import markdown_flowables
+
+    flow = markdown_flowables("[Clinician Name]\n[Clinician NPI]\n\nNext paragraph", getSampleStyleSheet())
+    assert len(flow) == 2
+    assert "<br/>" in flow[0].text and "Clinician NPI" in flow[0].text

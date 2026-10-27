@@ -13,7 +13,9 @@ DRAFT_HEADER = "DRAFT - requires clinician review and signature."
 SYSTEM = """You draft a letter of medical necessity for a prior-authorization request.
 Rules:
 - Use ONLY the verified facts and verified evidence quotes provided. Do not add clinical details.
-- Cite the payer policy criteria each point satisfies, including the policy URL.
+- Cite the payer policy criteria each point satisfies in plain parentheses, e.g. "(meets Aetna policy: 6 weeks of conservative therapy)".
+  Put the policy URL once, in a final "Policy reference" line. Use only plain ASCII punctuation: no special hyphens,
+  no 【 】 brackets, no >= or arrow symbols.
 - Use these exact placeholders and never invent values for them:
   [Clinician Name], [Clinician NPI], [Practice Name], [Practice Address], [Signature], [Date].
 - Refer to the patient only by the synthetic case ID given (no names).

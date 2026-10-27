@@ -23,8 +23,33 @@ STATUS_COLOR = {
 }
 
 
+_PDF_CHARS = {
+    "\u2010": "-",
+    "\u2011": "-",
+    "\u2012": "-",
+    "\u2212": "-",  # hyphen variants the model likes
+    "\u3010": "[",
+    "\u3011": "]",
+    "\u300c": '"',
+    "\u300d": '"',  # CJK brackets used as citations
+    "\u2265": ">=",
+    "\u2264": "<=",
+    "\u2192": "->",
+    "\u00a0": " ",
+    "\u202f": " ",
+    "\u2009": " ",
+}
+
+
+def pdf_safe(text: str) -> str:
+    """Helvetica (WinAnsi) cannot draw many Unicode characters; map them, then drop anything left."""
+    for bad, good in _PDF_CHARS.items():
+        text = text.replace(bad, good)
+    return text.encode("cp1252", errors="replace").decode("cp1252")
+
+
 def _inline(text: str) -> str:
-    text = escape(text)
+    text = escape(pdf_safe(text))
     text = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", text)
     return re.sub(r"(?<!\*)\*(?!\*)(.+?)\*", r"<i>\1</i>", text)
 
@@ -34,7 +59,9 @@ def markdown_flowables(md: str, styles) -> list:
 
     def flush():
         if para:
-            out.append(Paragraph(_inline(" ".join(para)), styles["BodyText"]))
+            out.append(
+                Paragraph("<br/>".join(_inline(x) for x in para), styles["BodyText"])
+            )  # keep address-block line breaks
             para.clear()
 
     for line in md.splitlines():
@@ -120,11 +147,12 @@ def build_pdf(assessment: Assessment, letter: LetterDraft | None, case_id: str) 
         rows.append(
             [
                 Paragraph(
-                    escape(c.description) + ("<br/><i>red-flag indication</i>" if c.bypass_group else ""),
+                    escape(pdf_safe(c.description))
+                    + ("<br/><i>red-flag indication</i>" if c.bypass_group else ""),
                     small,
                 ),
                 Paragraph(f'<font color="{color}"><b>{label}</b></font>', small),
-                Paragraph(escape(quote), small),
+                Paragraph(escape(pdf_safe(quote)), small),
             ]
         )
     table = Table(rows, colWidths=[2.6 * inch, 0.9 * inch, 3.3 * inch], repeatRows=1)
@@ -141,7 +169,10 @@ def build_pdf(assessment: Assessment, letter: LetterDraft | None, case_id: str) 
 
     if assessment.missing_items:
         story.append(Paragraph("Missing documentation", styles["Heading3"]))
-        story += [Paragraph(escape(m), styles["BodyText"], bulletText="•") for m in assessment.missing_items]
+        story += [
+            Paragraph(escape(pdf_safe(m)), styles["BodyText"], bulletText="•")
+            for m in assessment.missing_items
+        ]
 
     if letter:
         story += [Spacer(1, 12), Paragraph("Letter of medical necessity (draft)", styles["Heading2"])]
