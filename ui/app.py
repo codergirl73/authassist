@@ -67,6 +67,13 @@ st.markdown(
 .aa-step {display:flex; gap:.6rem; align-items:center; padding:.3rem 0; font-size:.86rem;
   border-bottom:1px dashed rgba(128,128,128,.2);}
 .aa-step .m {opacity:.7; font-size:.78rem;} .aa-step .t {margin-left:auto; opacity:.7; font-variant-numeric: tabular-nums;}
+.aa-step {flex-wrap: wrap;}
+@media (max-width: 640px) {
+  .block-container {padding: .8rem .7rem 3rem .7rem;}
+  .aa-hero {padding: .9rem 1rem;} .aa-hero h1 {font-size: 1.5rem;} .aa-hero p {font-size: .92rem;}
+  .aa-kpi .v {font-size: 1.2rem;} .aa-note {font-size: .74rem; padding: .7rem;}
+  .aa-step .m {flex-basis: 100%; order: 3;}
+}
 </style>
 <div class="aa-hero">
   <h1>🩺 AuthAssist</h1>
