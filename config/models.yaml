@@ -1,6 +1,12 @@
-# Placeholder — replace with exact IDs from `python scripts/list_models.py`.
-vision:    { model: "TBD", temperature: 0.0, max_tokens: 4000 }
-fast:      { model: "TBD", temperature: 0.0, max_tokens: 2000 }
-reasoning: { model: "TBD", temperature: 0.1, max_tokens: 6000 }
+# Nemotron model IDs on Nebius Token Factory.
+# Read from the public model catalog URLs (2026-10-27); all three have PUBLIC endpoints.
+# Confirm against your account with: python scripts/list_models.py
+#
+# Not used: Nemotron-3-Nano-Omni and Nemotron-Nano-V2-12b are dedicated-endpoint only
+# (no public endpoint), so Nemotron 3.5 Super VL is the vision model.
+vision:    { model: "nvidia/Nemotron-3.5-Super-VL",            temperature: 0.0, max_tokens: 4000 }
+fast:      { model: "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B",   temperature: 0.0, max_tokens: 3000 }
+reasoning: { model: "nvidia/Nemotron-3-Ultra-550b-a55b",       temperature: 0.1, max_tokens: 6000 }
 fallbacks:
-  reasoning: "TBD"
+  reasoning: "nvidia/nemotron-3-super-120b-a12b"
+  fast: "nvidia/nemotron-3-super-120b-a12b"
