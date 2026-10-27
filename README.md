@@ -63,6 +63,10 @@ All LLM calls go through one module, [`authassist/llm.py`](authassist/llm.py), w
 
 Nemotron's hidden reasoning is switched off for the `fast` and `vision` roles (`enable_thinking: false` in `config/models.yaml`); left on, Nano spent its whole token budget thinking and returned empty content.
 
+**Where Token Factory helped.** One OpenAI-compatible endpoint serves all three Nemotron models, so each pipeline step uses the model that fits it, switched by editing `config/models.yaml` with no infrastructure to run. Nemotron 3 Ultra is used only where serious reasoning pays off (policy → criteria, evidence matching, the letter, ~11s per call); Nemotron 3 Nano handles the fast, frequent calls (fact extraction ~3s, short asks <1s); Nemotron 3.5 Super VL reads faxed scans (~3s per page, ~99% transcription accuracy). The per-step model trace in the UI shows this split live. A whole readiness check takes 10-20s end to end.
+
+**Other Nebius services:** Token Factory only. The demo is hosted on Render, not Nebius AI Cloud. **Track:** Best Apps and Agents.
+
 Reliability features: 3 retries with exponential backoff, automatic fallback model, JSON-schema prompting with robust parsing (strips `<think>` blocks and code fences, repairs trailing commas), and one self-repair retry with the validation error appended.
 
 ## How we use Tavily
