@@ -102,7 +102,7 @@ def architecture():
     )
 
     # Left column
-    for box, title, sub in [
+    for box, _title, _sub in [
         ((60, 170, 380, 270), "Clinic staff", "browser"),
         ((60, 320, 380, 430), "Streamlit UI", "check · fill gaps · letter"),
         ((60, 480, 380, 590), "FastAPI", "/assess  /recheck  /letter"),
@@ -334,7 +334,7 @@ def swimlane():
     # boxes
     bl = layer()
     bd = ImageDraw.Draw(bl)
-    for n, (col, lane, _) in enumerate(steps, start=1):
+    for n, (_col, lane, _) in enumerate(steps, start=1):
         x, y = centers[n]
         color = LANES[lane][1]
         bd.rounded_rectangle(
@@ -346,7 +346,7 @@ def swimlane():
         )
     img = Image.alpha_composite(img, bl)
     d = ImageDraw.Draw(img)
-    for n, (col, lane, text) in enumerate(steps, start=1):
+    for n, (_col, lane, text) in enumerate(steps, start=1):
         x, y = centers[n]
         color = LANES[lane][1]
         centered(d, x + BOX_W / 2, y + BOX_H / 2 + 8, text, 16, True, gap=4)
