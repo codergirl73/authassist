@@ -32,3 +32,57 @@ def test_full_ui_flow(fake_llm):
     next(b for b in at.button if "Draft letter" in b.label).click().run()
     assert not at.exception
     assert at.session_state["pdf"][:4] == b"%PDF"
+
+
+def test_live_tavily_checkbox_forces_refresh(fake_llm, monkeypatch):
+    from authassist import pipeline
+
+    seen = {}
+    real = pipeline.run_pipeline
+
+    def spy(case, force_refresh=False, progress=None):
+        seen["force_refresh"] = force_refresh
+        return real(case, force_refresh=force_refresh, progress=progress)
+
+    monkeypatch.setattr(pipeline, "run_pipeline", spy)
+    fake_llm.on("Transcribe this clinical note", (CASES / "case_04" / "reference_text.txt").read_text())
+    setup(fake_llm, {"neuro_exam_documented": ("met", "Neuro exam: strength 5/5")})
+    at = AppTest.from_file("../ui/app.py", default_timeout=30)
+    at.run()
+    live = next(c for c in at.checkbox if "live via Tavily" in c.label)
+    assert live.value is False
+    live.check().run()
+    next(b for b in at.button if b.label == "Check readiness").click().run()
+    assert seen["force_refresh"] is True
+    assert not at.exception
+
+
+def test_annotate_note_highlights_verified_quotes():
+    import importlib.util
+    from pathlib import Path
+
+    from authassist.schemas import Criterion, CriterionResult
+
+    # import only the helper without executing the Streamlit page
+    src = (Path(__file__).resolve().parent.parent / "ui" / "app.py").read_text()
+    start = src.index("def annotate_note")
+    end = src.index("def run_with_progress")
+    ns = {"re": __import__("re"), "esc": __import__("html").escape}
+    exec(src[start:end], ns)  # noqa: S102
+    note = "HPI: pain for 10 weeks.\nCompleted 8 weeks of physical\ntherapy <b>x</b>."
+    crit = {
+        "a": Criterion(id="a", description="d", policy_citation="c"),
+        "b": Criterion(id="b", description="e", policy_citation="c"),
+    }
+    results = [
+        CriterionResult(
+            criterion_id="a", status="met", evidence_quote="pain for 10 weeks", quote_verified=True
+        ),
+        CriterionResult(
+            criterion_id="b", status="met", evidence_quote="8 weeks of physical therapy", quote_verified=True
+        ),
+    ]
+    out, n = ns["annotate_note"](note, results, crit)
+    assert n == 2 and out.count("<mark") == 2
+    assert "&lt;b&gt;" in out and "<b>" not in out  # note text is HTML-escaped
+    del importlib
