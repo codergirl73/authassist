@@ -2,7 +2,9 @@
 
 **AuthAssist catches the missing evidence in a prior-authorization request _before_ the insurer does.**
 
-<!-- screenshot / GIF of the readiness check goes here -->
+![AuthAssist: Not ready 33 → Ready 100](assets/thumbnail.png)
+
+<!-- add a screenshot / GIF of the live UI here -->
 
 Built for the **Nebius x NVIDIA Global AI Hackathon** (track: Best Apps and Agents) with **NVIDIA Nemotron** models on **Nebius Token Factory** and **Tavily** search + extract.
 
