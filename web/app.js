@@ -11,7 +11,7 @@ const EXAMPLE_ADDENDA = {
   neuro_exam: "Neuro exam: strength 5/5, reflexes 2+ symmetric, sensation intact, negative straight leg raise.",
   prior_imaging: "No prior lumbar imaging.",
 };
-const LOGO = `<span class="logo-mark"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span>`;
+const LOGO = `<img class="logo-mark" src="/logo.svg" width="34" height="34" alt="">`;
 
 /* ---------------------------------------------------------------- utils */
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));

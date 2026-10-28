@@ -38,8 +38,7 @@ button { font: inherit; cursor: pointer; }
 .nav .wrap { display: flex; align-items: center; gap: 1.5rem; height: 66px; }
 .logo { display: flex; align-items: center; gap: .6rem; font-weight: 800; font-size: 1.2rem; letter-spacing: -.02em; color: var(--ink); }
 .logo:hover { text-decoration: none; }
-.logo-mark { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; color: #fff;
-  background: linear-gradient(135deg, #76b900, #16a34a 55%, #0e7a37); box-shadow: 0 4px 12px rgba(22, 163, 74, .4); }
+.logo-mark { width: 34px; height: 34px; border-radius: 9px; display: block; box-shadow: 0 4px 12px rgba(22, 163, 74, .35); }
 .nav .links { display: flex; gap: 1.4rem; margin-left: 1.5rem; } .nav .links a { color: var(--ink2); font-weight: 500; cursor: pointer; }
 .nav .links a:hover { color: var(--ink); text-decoration: none; } .nav .spacer { flex: 1; }
 .hero { position: relative; overflow: hidden; padding: 72px 0 56px; }

@@ -40,7 +40,11 @@ DEFAULT_CASE = "case_04"  # scanned fax, not ready -> the "aha" demo path
 STEPS = ["Choose case", "Review", "Fix gaps", "Letter"]
 STEP_OF_VIEW = {"start": 1, "review": 2, "fix": 3, "letter": 4}
 
-st.set_page_config(page_title="AuthAssist", page_icon="🩺", layout="wide")
+st.set_page_config(
+    page_title="AuthAssist",
+    page_icon=str(Path(__file__).resolve().parent.parent / "assets" / "logo" / "favicon-64.png"),
+    layout="wide",
+)
 ss = st.session_state
 ss.setdefault("view", "home")
 
