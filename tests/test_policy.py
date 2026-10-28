@@ -77,3 +77,10 @@ def test_unknown_payer():
 def test_domain_matching():
     assert policy.domain_matches("https://www.aetna.com/x", ["aetna.com"])
     assert not policy.domain_matches("https://notaetna.com/x", ["aetna.com"])
+
+
+def test_demo_mode_prefers_snapshot_and_skips_tavily(monkeypatch):
+    monkeypatch.setattr("authassist.config.APP_ENV", "demo")
+    bundle = policy.find_policy("aetna")  # Tavily is disabled in tests: a live call would raise
+    assert bundle.policy.source == "snapshot" and bundle.criteria
+    assert not policy.cache_path("aetna", "lumbar_mri").exists()

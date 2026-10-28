@@ -235,7 +235,7 @@ def find_policy(
     if payer_key not in proc["payers"]:
         raise ValueError(f"Unknown payer {payer_key!r}")
 
-    if not force_refresh and proc["payers"][payer_key].get("prefer_snapshot"):
+    if not force_refresh and (proc["payers"][payer_key].get("prefer_snapshot") or config.APP_ENV == "demo"):
         snap = load_snapshot(payer_key, procedure_key)
         if snap:
             return snap

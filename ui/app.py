@@ -33,7 +33,7 @@ st.set_page_config(page_title="AuthAssist", page_icon="🩺", layout="wide")
 st.markdown(
     """
 <style>
-.block-container {padding-top: 1.2rem; max-width: 1180px;}
+.block-container {padding-top: 3.4rem; max-width: 1180px;}
 .aa-hero {padding: 1.3rem 1.5rem; border-radius: 16px; margin-bottom: .9rem;
   background: linear-gradient(120deg, rgba(118,185,0,.16), rgba(45,126,247,.14));
   border: 1px solid rgba(128,128,128,.22);}
@@ -74,6 +74,15 @@ st.markdown(
   .aa-kpi .v {font-size: 1.2rem;} .aa-note {font-size: .74rem; padding: .7rem;}
   .aa-step .m {flex-basis: 100%; order: 3;}
 }
+.aa-steps {display:flex; gap:.5rem; flex-wrap:wrap; margin:.2rem 0 1rem 0;}
+.aa-step-pill {display:flex; align-items:center; gap:.5rem; padding:.35rem .85rem .35rem .4rem; border-radius:999px; font-size:.85rem;
+  border:1px solid rgba(128,128,128,.28); opacity:.62;}
+.aa-step-pill .n {width:1.5rem; height:1.5rem; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:.78rem; background: rgba(128,128,128,.22);}
+.aa-step-pill.done {opacity:1; border-color: rgba(46,160,67,.55);} .aa-step-pill.done .n {background:#2ea043; color:#fff;}
+.aa-step-pill.active {opacity:1; border-color:#2ea043; box-shadow: 0 0 0 3px rgba(46,160,67,.16); font-weight:600;}
+.aa-step-pill.active .n {background:#fff; border:2px solid #2ea043; color:#2ea043;}
+.aa-foot {text-align:center; font-size:.8rem; opacity:.65; margin:2.2rem 0 .5rem 0;}
 </style>
 <div class="aa-hero">
   <h1>🩺 AuthAssist</h1>
@@ -248,6 +257,24 @@ def run_log(entries) -> str:
 
 # ---------------------------------------------------------------- app
 
+
+def stepper_html() -> str:
+    res = st.session_state.get("result")
+    if not res:
+        active = 2
+    else:
+        active = 4 if res.assessment.status == "ready" else 3
+    labels = ["Choose a case", "Check readiness", "Fill the gaps", "Letter & PDF"]
+    pills = []
+    for i, label in enumerate(labels, start=1):
+        cls = "done" if i < active else ("active" if i == active else "")
+        mark = "&#10003;" if i < active else str(i)
+        pills.append(f'<div class="aa-step-pill {cls}"><span class="n">{mark}</span>{label}</div>')
+    return '<div class="aa-steps">' + "".join(pills) + "</div>"
+
+
+stepper_slot = st.empty()  # filled at the end of the script so it reflects this run's result
+
 tab_check, tab_letter, tab_trace, tab_about = st.tabs(
     ["① Check readiness", "② Letter & PDF", "How it works · Model trace", "About & limitations"]
 )
@@ -283,6 +310,10 @@ with tab_check:
         help="Runs a fresh Tavily search + extract, then converts the policy to criteria with Nemotron "
         "(adds ~20-40s). Leave off to reuse the cached policy for a fast check.",
     )
+    if config.APP_ENV == "demo" and not live:
+        st.caption(
+            "⚡ Fast mode: uses the saved policy criteria (originally fetched with Tavily). Tick the box above to fetch the policy live (adds ~30-40s)."
+        )
     if live and payer == "medicare":
         st.caption(
             "ℹ️ CMS pages are quality-measure specs, so live Medicare extraction is noisy; Aetna or Molina work best."
@@ -607,3 +638,11 @@ with tab_about:
     st.markdown(
         "Note text and uploads are processed in memory only and never written to disk or logs; only metadata (case ID, timings) is logged."
     )
+
+stepper_slot.markdown(stepper_html(), unsafe_allow_html=True)
+
+st.markdown(
+    '<div class="aa-foot">Built for the Nebius x NVIDIA Global AI Hackathon · NVIDIA Nemotron on Nebius Token Factory · Tavily · '
+    '<a href="https://github.com/codergirl73/authassist" target="_blank">Source (MIT)</a></div>',
+    unsafe_allow_html=True,
+)
