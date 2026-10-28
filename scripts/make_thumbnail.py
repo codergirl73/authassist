@@ -261,6 +261,12 @@ def pipeline(img):
     return img
 
 
+def logo_mark(px: int) -> Image.Image:
+    from make_logo import mark
+
+    return mark(px)
+
+
 def main() -> None:
     random.seed(4)
     img = background()
@@ -272,7 +278,7 @@ def main() -> None:
     pw = d.textlength(pill, font=f) / S + 44
     pl = layer()
     ImageDraw.Draw(pl).rounded_rectangle(
-        (sc(80), sc(48), sc(80 + pw), sc(96)),
+        (sc(160), sc(48), sc(160 + pw), sc(96)),
         radius=sc(25),
         fill=(118, 214, 122, 40),
         outline=(118, 214, 122, 170),
@@ -280,7 +286,8 @@ def main() -> None:
     )
     img = Image.alpha_composite(img, pl)
     d = ImageDraw.Draw(img)
-    d.text((sc(102), sc(72)), pill, font=f, fill=(150, 235, 155), anchor="lm")
+    img.alpha_composite(logo_mark(sc(64)), (sc(80), sc(40)))
+    d.text((sc(182), sc(72)), pill, font=f, fill=(150, 235, 155), anchor="lm")
 
     # Headline
     d.text((sc(78), sc(212)), "AuthAssist", font=font(116, True), fill=WHITE, anchor="ls")

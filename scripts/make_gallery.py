@@ -59,9 +59,6 @@ def save(img, name):
 
 def screenshot_frame(src, title, subtitle, name):
     pic = Image.open(ASSETS / src).convert("RGB")
-    pic = pic.crop(
-        (285, 44, pic.width - 285, pic.height)
-    )  # drop empty side margins and the Streamlit toolbar
     save(paste_card(canvas(title, subtitle), pic, (70, 170, 1430, 930)), name)
 
 
@@ -154,29 +151,55 @@ def eval_frame(name):
 
 def main():
     GALLERY.mkdir(parents=True, exist_ok=True)
+    for old in GALLERY.glob("*.png"):
+        old.unlink()
     shutil.copy(ASSETS / "thumbnail.png", GALLERY / "01-overview.png")
+    screenshot_frame(
+        "ui-landing.jpg",
+        "A real web app, not a notebook",
+        "Landing page, demo sign-in, and a guided workspace.",
+        "02-landing.png",
+    )
+    screenshot_frame(
+        "ui-choose.jpg",
+        "Pick a note, typed or a scanned fax",
+        "Eight synthetic cases. Nemotron vision reads the fax.",
+        "03-choose-note.png",
+    )
     screenshot_frame(
         "ui-results.jpg",
         "Readiness check",
         "Score, key metrics, what's missing, and the policy source.",
-        "02-readiness-result.png",
+        "04-readiness-result.png",
     )
     screenshot_frame(
         "ui-annotated-note.jpg",
         "Evidence, verified in the note",
         "Green is met, red is missing. Every quote is checked word-for-word in code.",
-        "03-annotated-note.png",
+        "05-annotated-note.png",
     )
-    shutil.copy(ASSETS / "architecture.png", GALLERY / "04-architecture.png")
-    shutil.copy(ASSETS / "swimlane.png", GALLERY / "05-swimlane.png")
+    screenshot_frame(
+        "ui-fixed.jpg",
+        "Fill the gaps, re-check, 33 to 100",
+        "Add the missing documentation as an addendum and the score updates.",
+        "06-gap-fill-100.png",
+    )
+    shutil.copy(ASSETS / "architecture.png", GALLERY / "07-architecture.png")
+    shutil.copy(ASSETS / "swimlane.png", GALLERY / "08-swimlane.png")
     screenshot_frame(
         "ui-model-trace.jpg",
         "Which model did what",
         "Nemotron on Nebius Token Factory, with latency and tokens for every call.",
-        "06-model-trace.png",
+        "09-model-trace.png",
     )
-    pdf_frame("07-letter-and-pdf.png")
-    eval_frame("08-evaluation.png")
+    screenshot_frame(
+        "ui-letter.jpg",
+        "Draft letter + request PDF",
+        "For clinician review and signature. Never submitted to an insurer.",
+        "10-letter.png",
+    )
+    pdf_frame("11-letter-and-pdf.png")
+    eval_frame("12-evaluation.png")
 
 
 if __name__ == "__main__":
