@@ -4,7 +4,7 @@ services:
     name: authassist
     runtime: docker
     plan: free
-    healthCheckPath: /_stcore/health
+    healthCheckPath: /health
     envVars:
       - key: DEMO_MODE
         value: "true"

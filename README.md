@@ -101,11 +101,11 @@ python -m authassist.cli --case data/synthetic_notes/case_04 \
   --addendum "Low back pain for 9 weeks. Completed 8 weeks of physical therapy from 08/20/2026 to 10/15/2026." \
   --letter out/case_04.pdf
 
-# UI
-streamlit run ui/app.py               # DEMO_MODE=false in .env enables uploads/paste
+# Web app (landing page, demo sign-in, workspace) + API, one process
+uvicorn api.main:app --port 8000      # open http://localhost:8000 ; API: /health, /assess, /recheck, /letter, /docs
 
-# API
-uvicorn api.main:app --port 8000      # GET /health, POST /assess, POST /recheck, POST /letter
+# Alternative Streamlit UI
+streamlit run ui/app.py               # DEMO_MODE=false in .env enables uploads/paste
 
 # Evaluation and tests
 python eval/run_eval.py               # writes eval/results.md
