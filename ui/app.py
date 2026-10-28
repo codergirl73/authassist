@@ -36,8 +36,60 @@ DEFAULT_CASE_INDEX = 3  # case 04: scanned fax, not ready -> the "aha" demo path
 
 st.set_page_config(page_title="AuthAssist", page_icon="🩺", layout="wide")
 
-st.markdown(
-    """
+
+def _mini_ring(score: int, color: str, label: str) -> str:
+    circ = 2 * 3.14159265 * 40
+    dash = circ * score / 100
+    return (
+        '<div><svg width="104" height="104" viewBox="0 0 100 100">'
+        '<circle cx="50" cy="50" r="40" fill="none" stroke="rgba(128,128,128,.28)" stroke-width="10"/>'
+        f'<circle cx="50" cy="50" r="40" fill="none" stroke="{color}" stroke-width="10" stroke-linecap="round" '
+        f'stroke-dasharray="{dash:.1f} {circ:.1f}" transform="rotate(-90 50 50)"/>'
+        f'<text x="50" y="58" text-anchor="middle" font-size="26" font-weight="700" fill="{color}">{score}</text></svg>'
+        f'<div class="lab" style="color:{color}">{label}</div></div>'
+    )
+
+
+def landing_html() -> str:
+    tiles = [
+        ("👁️", "Reads faxed notes", "Nemotron vision turns a scan into text."),
+        ("🔎", "Finds the live policy", "Tavily fetches the insurer's own criteria."),
+        ("🛡️", "Proves every quote", "Evidence is verified word-for-word in code."),
+        ("📄", "Drafts the letter", "Letter + PDF for the clinician to sign."),
+    ]
+    tiles_html = "".join(
+        f'<div class="aa-tile"><div class="ic">{i}</div><b>{ti}</b><span>{d}</span></div>'
+        for i, ti, d in tiles
+    )
+    stats = [
+        ("8/8", "outcomes correct"),
+        ("57/57", "quotes verified"),
+        ("~99%", "fax read accuracy"),
+        ("0", "claims sent to insurers"),
+    ]
+    stats_html = "".join(f'<div class="aa-stat"><b>{n}</b><span>{lb}</span></div>' for n, lb in stats)
+    return (
+        '<div class="aa-hero2"><div>'
+        '<span class="aa-brand">🩺 AuthAssist</span>'
+        '<div class="aa-h1">Catch the missing evidence <em>before</em> the insurer does.</div>'
+        "<p class=\"aa-sub\">Check a clinical note against the insurer's current policy, see exactly what's missing, "
+        "and draft the letter. Powered by NVIDIA Nemotron on Nebius Token Factory and Tavily.</p>"
+        '<a class="aa-cta" href="#try-it">Try the demo ↓</a>'
+        '<a class="aa-cta2" href="https://github.com/codergirl73/authassist" target="_blank">View source</a>'
+        '</div><div class="aa-mock"><div class="aa-mock-title">Readiness score</div><div class="aa-mock-rings">'
+        + _mini_ring(33, "#f85149", "Not ready")
+        + '<div class="aa-mock-arrow">→</div>'
+        + _mini_ring(100, "#2ea043", "Ready")
+        + '</div><div class="aa-mock-rows">'
+        '<div class="r bad"><div>✗ 6+ weeks of symptoms</div><span>missing</span></div>'
+        '<div class="r bad"><div>✗ Conservative therapy trial</div><span>missing</span></div>'
+        '<div class="r ok"><div>✓ Neuro exam documented</div><span>verified in note</span></div>'
+        "</div></div></div>"
+        f'<div class="aa-stats">{stats_html}</div><div class="aa-tiles">{tiles_html}</div>'
+    )
+
+
+LANDING = """
 <style>
 .block-container {padding-top: 3.4rem; max-width: 1180px;}
 .aa-hero {padding: 1.3rem 1.5rem; border-radius: 16px; margin-bottom: .9rem;
@@ -89,20 +141,43 @@ st.markdown(
 .aa-step-pill.active {opacity:1; border-color:#2ea043; box-shadow: 0 0 0 3px rgba(46,160,67,.16); font-weight:600;}
 .aa-step-pill.active .n {background:#fff; border:2px solid #2ea043; color:#2ea043;}
 .aa-foot {text-align:center; font-size:.8rem; opacity:.65; margin:2.2rem 0 .5rem 0;}
+.aa-hero2 {display:grid; grid-template-columns: 1.2fr .9fr; gap:2rem; align-items:center; padding:2.1rem 2.3rem; border-radius:22px;
+  margin-bottom:1rem; background: linear-gradient(125deg, rgba(118,185,0,.20), rgba(45,126,247,.16) 60%, rgba(118,80,255,.12));
+  border:1px solid rgba(128,128,128,.24);}
+.aa-brand {display:inline-flex; align-items:center; gap:.5rem; font-weight:700; font-size:1.05rem; padding:.3rem .8rem; border-radius:999px;
+  background: rgba(128,128,128,.14); border:1px solid rgba(128,128,128,.28);}
+.aa-h1 {font-size: clamp(2rem, 4.4vw, 3.15rem); line-height:1.07; font-weight:800; letter-spacing:-.03em; margin:.9rem 0 .8rem 0;}
+.aa-h1 em {font-style:normal; color:#2ea043;}
+.aa-sub {font-size:1.08rem; opacity:.86; max-width:34rem; margin:0 0 1rem 0;}
+.aa-cta {display:inline-block; padding:.7rem 1.3rem; background:#2ea043; color:#fff !important; border-radius:12px; font-weight:700;
+  text-decoration:none !important; box-shadow:0 6px 18px rgba(46,160,67,.35);}
+.aa-cta2 {display:inline-block; margin-left:.7rem; font-size:.92rem; opacity:.85; text-decoration:underline;}
+.aa-mock {border:1px solid rgba(128,128,128,.3); border-radius:18px; padding:1rem 1.1rem; background: rgba(128,128,128,.10);
+  box-shadow:0 10px 30px rgba(0,0,0,.12);}
+.aa-mock-title {font-size:.72rem; letter-spacing:.09em; text-transform:uppercase; opacity:.65; margin-bottom:.4rem;}
+.aa-mock-rings {display:flex; align-items:center; justify-content:space-around; gap:.4rem;}
+.aa-mock-rings .lab {text-align:center; font-weight:700; font-size:.92rem; margin-top:-.2rem;}
+.aa-mock-arrow {font-size:1.6rem; opacity:.55;}
+.aa-mock-rows {margin-top:.7rem; display:flex; flex-direction:column; gap:.35rem;}
+.aa-mock-rows .r {display:flex; justify-content:space-between; gap:.6rem; font-size:.84rem; padding:.4rem .6rem; border-radius:9px;
+  border-left:4px solid; background: rgba(128,128,128,.08);}
+.aa-mock-rows .r span {opacity:.7; font-size:.76rem; white-space:nowrap;}
+.aa-mock-rows .bad {border-color:#f85149;} .aa-mock-rows .ok {border-color:#2ea043;}
+.aa-tiles {display:grid; grid-template-columns: repeat(4, 1fr); gap:.8rem; margin:.2rem 0 1rem 0;}
+.aa-tile {border:1px solid rgba(128,128,128,.25); border-radius:14px; padding:.85rem .95rem; background: rgba(128,128,128,.05);}
+.aa-tile .ic {font-size:1.5rem;} .aa-tile b {display:block; margin:.25rem 0 .15rem 0;} .aa-tile span {font-size:.84rem; opacity:.75;}
+.aa-stats {display:flex; gap:2rem; flex-wrap:wrap; margin:0 0 1rem .2rem;}
+.aa-stat b {font-size:1.55rem; color:#2ea043; display:block; line-height:1.1;} .aa-stat span {font-size:.78rem; opacity:.7;}
+@media (max-width: 860px) {
+  .aa-hero2 {grid-template-columns: 1fr; padding:1.3rem 1.2rem; gap:1.2rem;}
+  .aa-tiles {grid-template-columns: repeat(2, 1fr);} .aa-stats {gap:1.2rem;}
+}
 </style>
-<div class="aa-hero">
-  <h1>🩺 AuthAssist</h1>
-  <p>Catch the missing evidence in a prior-authorization request — before the insurer does.</p>
-  <span class="aa-chip">🟢 NVIDIA Nemotron on Nebius Token Factory</span>
-  <span class="aa-chip">🔎 Live payer policy via Tavily</span>
-  <span class="aa-chip">🛡️ Every quote verified in code</span>
-  <span class="aa-chip">📄 Draft letter + PDF</span>
-</div>
+{HERO}
 <div class="aa-banner">⚠️ <b>Demo uses synthetic data only.</b> Do not upload real patient information.
 Drafts require clinician review. AuthAssist never submits anything to an insurer.</div>
-""",
-    unsafe_allow_html=True,
-)
+<div id="try-it"></div>"""
+st.markdown(LANDING.replace("{HERO}", landing_html()), unsafe_allow_html=True)
 
 
 # ---------------------------------------------------------------- helpers
