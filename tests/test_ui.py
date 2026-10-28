@@ -86,3 +86,19 @@ def test_annotate_note_highlights_verified_quotes():
     assert n == 2 and out.count("<mark") == 2
     assert "&lt;b&gt;" in out and "<b>" not in out  # note text is HTML-escaped
     del importlib
+
+
+def test_example_answers_button_and_preview(fake_llm):
+    case04 = (CASES / "case_04" / "reference_text.txt").read_text()
+    fake_llm.on("Transcribe this clinical note", case04)
+    setup(fake_llm, {"neuro_exam_documented": ("met", "Neuro exam: strength 5/5")})
+    at = AppTest.from_file("../ui/app.py", default_timeout=30)
+    at.run()
+    assert not at.exception
+    assert any("30-second tour" in e.label for e in at.expander)
+    next(b for b in at.button if b.label == "Check readiness").click().run()
+    assert not at.exception, at.exception
+    next(b for b in at.button if "example answers" in b.label).click().run()
+    assert not at.exception, at.exception
+    filled = [t.value for t in at.text_area if t.value]
+    assert any("9 weeks" in v for v in filled) and any("physical therapy" in v for v in filled)

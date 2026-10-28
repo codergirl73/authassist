@@ -26,6 +26,12 @@ ROLE_LABEL = {
     "code": "Code",
 }
 ROLE_ICON = {"vision": "👁️", "fast": "⚡", "reasoning": "🧠", "tavily": "🔎", "code": "⚙️"}
+EXAMPLE_ADDENDA = {  # synthetic text used by the demo-only "Fill with example answers" button
+    "symptom_duration": "Low back pain for 9 weeks.",
+    "conservative_therapy": "Completed 8 weeks of physical therapy from 08/20/2026 to 10/15/2026 with minimal improvement.",
+    "neuro_exam": "Neuro exam: strength 5/5, reflexes 2+ symmetric, sensation intact, negative straight leg raise.",
+    "prior_imaging": "No prior lumbar imaging.",
+}
 DEFAULT_CASE_INDEX = 3  # case 04: scanned fax, not ready -> the "aha" demo path
 
 st.set_page_config(page_title="AuthAssist", page_icon="🩺", layout="wide")
@@ -283,8 +289,21 @@ ss = st.session_state
 with tab_check:
     cases = case_options()
     payer_keys = list(PROC["payers"])
-    left, right = st.columns([3, 2])
-    with left:
+
+    with st.expander("👋 First time here? Take the 30-second tour", expanded=not ss.get("result")):
+        st.markdown(
+            """
+1. **Case 04** (a scanned fax) is preselected. Click **Check readiness**.
+2. Read the score, then open **Annotated note** to see each piece of evidence highlighted in the note.
+3. Under **Fill the gaps**, click **Fill with example answers**, then **Add to note & re-check** and watch the score rise.
+4. Open **② Letter & PDF** to draft the letter of medical necessity.
+
+_All cases are synthetic. Nothing is ever sent to an insurer._
+"""
+        )
+
+    ctrl, preview = st.columns([3, 2], gap="large")
+    with ctrl:
         choice = st.selectbox("Load example case (synthetic)", list(cases), index=DEFAULT_CASE_INDEX)
         case = cases[choice]
         upload, pasted = None, None
@@ -294,46 +313,52 @@ with tab_check:
                     "Clinical note (PDF, PNG, JPG, TXT)", type=["pdf", "png", "jpg", "jpeg", "txt"]
                 )
                 pasted = st.text_area("Or paste note text", height=140)
-    with right:
-        payer = st.selectbox(
-            "Payer",
-            payer_keys,
-            index=payer_keys.index(case["payer"]),
-            format_func=lambda k: PROC["payers"][k]["name"],
-            key=f"payer_{case['case_id']}",
-        )
-        st.text_input("Procedure", PROC["display_name"], disabled=True)
+        pc1, pc2 = st.columns(2)
+        with pc1:
+            payer = st.selectbox(
+                "Payer",
+                payer_keys,
+                index=payer_keys.index(case["payer"]),
+                format_func=lambda k: PROC["payers"][k]["name"],
+                key=f"payer_{case['case_id']}",
+            )
+        with pc2:
+            st.text_input("Procedure", PROC["display_name"], disabled=True)
 
-    live = st.checkbox(
-        "🔎 Fetch the payer policy live via Tavily (ignore cache)",
-        value=False,
-        help="Runs a fresh Tavily search + extract, then converts the policy to criteria with Nemotron "
-        "(adds ~20-40s). Leave off to reuse the cached policy for a fast check.",
-    )
-    if config.APP_ENV == "demo" and not live:
-        st.caption(
-            "⚡ Fast mode: uses the saved policy criteria (originally fetched with Tavily). Tick the box above to fetch the policy live (adds ~30-40s)."
+        live = st.checkbox(
+            "🔎 Fetch the payer policy live via Tavily (ignore cache)",
+            value=False,
+            help="Runs a fresh Tavily search + extract, then converts the policy to criteria with Nemotron "
+            "(adds ~20-40s). Leave off to reuse the cached policy for a fast check.",
         )
-    if live and payer == "medicare":
-        st.caption(
-            "ℹ️ CMS pages are quality-measure specs, so live Medicare extraction is noisy; Aetna or Molina work best."
-        )
+        if config.APP_ENV == "demo" and not live:
+            st.caption(
+                "⚡ Fast mode: uses the saved policy criteria (originally fetched with Tavily). Tick the box above to fetch the policy live (adds ~30-40s)."
+            )
+        if live and payer == "medicare":
+            st.caption(
+                "ℹ️ CMS pages are quality-measure specs, so live Medicare extraction is noisy; Aetna or Molina work best."
+            )
 
-    if not (pasted or upload):
-        with st.expander("View the clinical note before checking"):
-            if (case["dir"] / "note.txt").exists():
+        b1, b2 = st.columns([3, 1])
+        with b1:
+            go = st.button("Check readiness", type="primary", width="stretch")
+        with b2:
+            if st.button("Start over", width="stretch"):
+                for k in ("result", "letter", "pdf", "letter_traces"):
+                    ss.pop(k, None)
+                st.rerun()
+
+    with preview:
+        st.markdown("**Clinical note** · synthetic")
+        with st.container(height=420, border=True):
+            if pasted or upload:
+                st.caption("Your own note will be used when you click Check readiness.")
+            elif (case["dir"] / "note.txt").exists():
                 st.code((case["dir"] / "note.txt").read_text(), language=None)
             else:
-                st.image(str(case["dir"] / "note.png"), caption="Scanned fax — read by the vision model")
-
-    b1, b2 = st.columns([4, 1])
-    with b1:
-        go = st.button("Check readiness", type="primary", width="stretch")
-    with b2:
-        if st.button("Start over", width="stretch"):
-            for k in ("result", "letter", "pdf", "letter_traces"):
-                ss.pop(k, None)
-            st.rerun()
+                st.image(str(case["dir"] / "note.png"))
+                st.caption("Scanned fax: read by the Nemotron vision model.")
 
     if go:
         if pasted and pasted.strip():
@@ -490,6 +515,16 @@ with tab_check:
             st.caption(
                 "Additions are appended to the note as a labeled clinician addendum, then facts and evidence are re-checked (policy and criteria are reused)."
             )
+            if config.DEMO_MODE:
+                if st.button(
+                    "✨ Fill with example answers",
+                    help="Adds plausible synthetic text so you can see the re-check work.",
+                ):
+                    for c, _r in gaps:
+                        example = EXAMPLE_ADDENDA.get(c.category)
+                        if example:
+                            ss[f"gap_{c.id}_{len(result.addenda)}"] = example
+                    st.rerun()
             with st.form("gapfill"):
                 entries = []
                 for c, _r in gaps:
