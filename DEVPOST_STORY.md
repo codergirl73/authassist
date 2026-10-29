@@ -2,7 +2,11 @@
 
 Before many procedures, US clinics need the insurer's approval first. Staff lose hours each week hunting for each insurer's rules and gathering evidence, and many requests are denied for an avoidable reason: the evidence *existed* in the chart but was never documented against the insurer's criteria. We wanted a tool that catches that gap **before** the insurer does.
 
-<!-- ADD: 2-3 sourced statistics on prior-authorization burden / avoidable denials, with links -->
+The numbers behind that:
+
+- **The burden is large.** In the AMA's 2025 survey of 1,000 physicians, doctors completed about **40 prior authorizations a week**, which took about **13 hours of physician and staff time**. **95%** said prior authorization delays access to necessary care. ([AMA, May 2026](https://www.ama-assn.org/press-center/ama-press-releases/ama-survey-prior-authorization-reform-pledge-falls-short-physicians))
+- **Denials are common.** KFF's analysis of 2025 insurer data found insurers denied **12% of standard requests in Medicare Advantage, 14% in Medicaid managed care and 18% in the ACA Marketplace**. ([KFF, August 2026](https://www.kff.org/patient-consumer-protections/prior-authorization-metrics-provide-new-insights-into-insurer-practices-but-gaps-remain/))
+- **Many denials do not hold up.** Denials are rarely appealed, but when they are, KFF found **67% (Medicare Advantage), 47% (Medicaid managed care) and 43% (Marketplace)** were overturned. We don't claim every denial is a documentation problem; AuthAssist targets the ones where the evidence existed but was never lined up against the criteria. (Same KFF source.)
 
 ## What it does
 
