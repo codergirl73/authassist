@@ -10,6 +10,7 @@ client = TestClient(app)
 
 def test_health():
     assert client.get("/health").json()["status"] == "ok"
+    assert client.get("/_stcore/health").status_code == 200  # legacy Render health-check path
 
 
 def test_assess_letter_roundtrip(fake_llm):

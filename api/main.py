@@ -52,6 +52,7 @@ class AddendumRequest(BaseModel):
 
 
 @app.get("/health")
+@app.get("/_stcore/health")  # the path Render's health check used for the earlier Streamlit deploy
 def health() -> dict:
     return {"status": "ok", "version": __version__, "demo_mode": config.DEMO_MODE}
 
