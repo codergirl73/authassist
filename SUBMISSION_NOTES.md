@@ -8,7 +8,7 @@
 - [ ] **Public repo**: https://github.com/codergirl73/authassist (MIT detected in About: done).
 - [ ] **README** names Nemotron models, where Token Factory helped, other Nebius services (done).
 - [ ] **Text description** (below).
-- [ ] **Video: under 3:00**, public on **YouTube**, no copyrighted music, shows the project running.
+- [x] **Video: under 3:00**, public on **YouTube**, no copyrighted music: https://youtu.be/13z5ymkkB_A (narrated walkthrough built from screenshots; the live-Tavily lookup is not shown in it, so mention Tavily's runtime use in the written description).
 - [ ] **Feedback** on Token Factory, AI Cloud (not used) and the NVIDIA models (log below). Eligible for the Most Valuable Feedback prize.
 - [ ] State that the project is **new** (created during the Submission Period, Aug 26 - Oct 30, 2026).
 

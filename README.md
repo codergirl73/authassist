@@ -4,7 +4,9 @@
 
 ![AuthAssist: Not ready 33 → Ready 100](assets/thumbnail.png)
 
-<!-- add a screenshot / GIF of the live UI here -->
+**Demo video (2:17):** https://youtu.be/13z5ymkkB_A
+
+![AuthAssist readiness review after the fix: 100, ready](assets/ui-fixed.jpg)
 
 Built for the **Nebius x NVIDIA Global AI Hackathon** (track: Best Apps and Agents) with **NVIDIA Nemotron** models on **Nebius Token Factory** and **Tavily** search + extract.
 
