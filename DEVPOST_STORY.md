@@ -33,6 +33,8 @@ Scope: MRI lumbar spine without contrast (CPT 72148) for low back pain, with Aet
   - **Nemotron 3 Nano** for fast, frequent calls (fact extraction ~3s, short asks <1s).
   - **Nemotron 3.5 Super VL** to read faxed scans (~99% transcription accuracy on our noisy test faxes).
 - **Tavily** supplies the live policy: domain-restricted search so results come from the insurer's own site, then extract for the full text. Policies and criteria are cached, with a committed criteria snapshot as a safety net.
+
+**Live Tavily, runtime, you can trigger it:** every time the app fetches a policy live it makes real Tavily `search` (advanced) and `extract` calls at runtime, and the run log lists each one with its latency. In the live demo, open **Choose note → Advanced options** and tick **"Fetch the payer policy live via Tavily"**, then run the check. That bypasses the saved copy, pulls the insurer's current policy through Tavily, converts it to criteria with Nemotron, and scores the note against it (adds about 30-40 seconds). Without the box ticked, the demo reuses criteria that were originally fetched the same way, so the default check is fast. Try it: https://authassist.onrender.com/
 - **Trust by design:** the model *proposes* evidence, code *verifies* it, and code *scores* it. A per-step model trace in the UI shows which Nemotron model did what.
 - Python, FastAPI, Streamlit, Pydantic, ReportLab, Docker.
 
